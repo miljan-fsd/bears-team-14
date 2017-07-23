@@ -1,0 +1,27 @@
+{
+  "name": "bears-team-14",
+  "version": "1.0.0",
+  "description": "## Jobbatical clone!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm-run-all --parallel watch:server start:client",
+    "watch:server": "nodemon server.js",
+    "start:client": "cd client && yarn start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jenovs/bears-team-14.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jenovs/bears-team-14/issues"
+  },
+  "homepage": "https://github.com/jenovs/bears-team-14#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.2"
+  }
+}

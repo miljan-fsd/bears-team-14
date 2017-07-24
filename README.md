@@ -9,3 +9,7 @@
 * [jenovs](https://github.com/jenovs) (Team Leader)
 * [Zyberg](https://github.com/Zyberg)
 * [miljan-fsd](https://github.com/miljan-fsd)
+
+---
+
+Chingu Cohorts

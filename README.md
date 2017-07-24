@@ -2,6 +2,8 @@
 
 ## Jobbatical clone!
 
+---
+
 ### Team Members
 
 * [jenovs](https://github.com/jenovs) (Team Leader)

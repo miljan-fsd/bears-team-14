@@ -8,7 +8,7 @@
     "start": "npm-run-all --parallel watch:server start:client",
     "watch:server": "nodemon server.js",
     "start:client": "cd client && yarn start",
-    "postinstall": "cd client && yarn install"
+    "setup": "yarn install && cd client && yarn install"
   },
   "repository": {
     "type": "git",

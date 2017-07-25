@@ -1,0 +1,19 @@
+.item-card {
+  border: 1px solid rgb(238, 238, 238);
+  border-radius: 5px;
+  width: 30vw;
+  max-width: 740px;
+  margin-bottom: 30px;
+  box-shadow: none;
+  transition: box-shadow 0.15s;
+}
+
+.item-card:hover {
+  box-shadow: 0 0 10px 5px rgb(238, 238, 238);
+}
+
+.item-card__image {
+  background-size: cover;
+  background-position: 50% 50%;
+  height: 200px;
+}

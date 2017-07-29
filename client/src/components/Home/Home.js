@@ -29,7 +29,7 @@ class Home extends Component {
     }
   }
   render() {
-		const { data } = this.state;
+    const { data } = this.state;
     return (
       <div>
         <FeaturedItems>

@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 
 class Join extends Component {
-	render() {
-		return (
-			<div>
-				Join
-			</div>
-		);
-	}
+  render() {
+    return <div>Join</div>;
+  }
 }
 
 export default Join;

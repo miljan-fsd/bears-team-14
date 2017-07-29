@@ -13,9 +13,9 @@ const ItemCard = ({ imgUrl, title, description, expDate, isSaved }) =>
       <p>
         {title}
       </p>
-      <p>
+      <div className="item-card__description">
         {description}
-      </p>
+      </div>
     </div>
     <div>
       {expDate} - {isSaved ? 'unsave' : 'save'}

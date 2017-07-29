@@ -1,11 +1,20 @@
 .item-card {
+  box-sizing: border-box;
   border: 1px solid rgb(238, 238, 238);
   border-radius: 5px;
-  width: 30vw;
+  margin: 15px 0;
+  height: 400px;
+  width: 100%;
   max-width: 740px;
-  margin-bottom: 30px;
   box-shadow: none;
   transition: box-shadow 0.15s;
+}
+
+.item-card__description {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
 }
 
 .item-card:hover {
@@ -16,4 +25,18 @@
   background-size: cover;
   background-position: 50% 50%;
   height: 200px;
+}
+
+@media (min-width: 1200px) {
+  .item-card {
+    width: 30%;
+    margin: 15px;
+  }
+}
+
+@media (min-width: 768px) AND (max-width: 1199px) {
+  .item-card {
+    width: 45%;
+    margin: 15px;
+  }
 }

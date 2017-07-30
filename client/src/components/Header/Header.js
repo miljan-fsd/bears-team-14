@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 
 import './style.css';
 
@@ -16,9 +16,9 @@ class Header extends Component {
         <div>
           <div className="navbar">
             <div className="navbar-brand">
-              <Link className="navbar-item" to="/">
+              <NavLink to="/">
                 <img src="http://via.placeholder.com/185x80" alt="Logo" />
-              </Link>
+              </NavLink>
 
               <div
                 className="navbar-burger burger"
@@ -32,22 +32,38 @@ class Header extends Component {
 
             <div id="mainNavigation" className="navbar-menu">
               <div className="navbar-start">
-                <Link className="navbar-item" to="/jobs">
+                <NavLink
+                  activeClassName="selected"
+                  className="navbar-item"
+                  to="/jobs"
+                >
                   Explore Jobs
-                </Link>
+                </NavLink>
               </div>
               <div className="navbar-end">
-                <Link className="navbar-item" to="/login">
+                <NavLink
+                  activeClassName="selected"
+                  className="navbar-item"
+                  to="/login"
+                >
                   Log in
-                </Link>
+                </NavLink>
 
-                <Link className="navbar-item" to="/join">
+                <NavLink
+                  activeClassName="selected"
+                  className="navbar-item"
+                  to="/join"
+                >
                   Join
-                </Link>
+                </NavLink>
 
-                <Link className="navbar-item" to="/hiring">
+                <NavLink
+                  activeClassName="selected"
+                  className="navbar-item"
+                  to="/hiring"
+                >
                   For the Employers
-                </Link>
+                </NavLink>
               </div>
             </div>
           </div>

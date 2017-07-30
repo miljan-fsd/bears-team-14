@@ -1,3 +1,20 @@
+.navbar {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 .navbar .navbar-item {
-	text-transform: uppercase;
+  text-transform: uppercase;
+}
+
+.navbar .navbar-item:hover {
+  color: #00f;
+  background-color: #fff;
+}
+
+.selected {
+  color: #00f;
+  border-bottom: 2px solid #000;
 }

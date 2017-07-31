@@ -1,6 +1,10 @@
 const JobsHandler = require(__dirname + '/../controllers/JobsHandler.js');
 const Router = require('express').Router();
 
+function catchErrors(fn) {
+  return (req, res, next) => fn(req, res, next).catch(next);
+}
+
 // Dummy route to demonstrate authentication (not implemented yet)
 Router.get('/topsecret', isLoggedIn, (req, res) => {
   return false;
@@ -30,7 +34,7 @@ Router.delete('/test/', (req, res) => {
   });
 });
 
-Router.get('/jobs/', JobsHandler.getAll);
+Router.get('/jobs/', catchErrors(JobsHandler.getAll));
 
 function isLoggedIn(req, res, next) {
   //TODO

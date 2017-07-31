@@ -3,6 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
+const ErrorHandler = require('./server/controllers/ErrorHandler.js');
+
+// ===== App Setup =====
 const app = express();
 
 // ===== Models =====
@@ -30,6 +33,9 @@ const PORT = process.env.PORT || 3001;
 // ===== App Use Routes =====
 //app.use(authRoute);
 app.use('/api/v1', userHandler);
+
+// ====== Error Handler Middleware =====
+app.use(ErrorHandler);
 
 app.listen(PORT, () => {
   console.log('API listening on port ' + PORT);

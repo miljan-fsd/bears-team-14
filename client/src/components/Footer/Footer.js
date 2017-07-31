@@ -72,21 +72,51 @@ class Footer extends Component {
               <p className="menu-label">
                 <strong>Follow Us</strong>
               </p>
-              <ul className="menu-list">
+              <ul className="menu-list social">
                 <li>
-                  <a href="/">Facebook</a>
+                  <a className="is-clearfix" href="/">
+                    Facebook
+                    <i
+                      className="fa fa-facebook-square facebook is-pulled-right"
+                      aria-hidden="true"
+                    />
+                  </a>
                 </li>
                 <li>
-                  <a href="/">Twitter</a>
+                  <a className="is-clearfix" href="/">
+                    Twitter
+                    <i
+                      className="fa fa-twitter-square twitter is-pulled-right"
+                      aria-hidden="true"
+                    />
+                  </a>
                 </li>
                 <li>
-                  <a href="/">LinkedIn</a>
+                  <a className="is-clearfix" href="/">
+                    LinkedIn
+                    <i
+                      className="fa fa-linkedin-square linkedin is-pulled-right"
+                      aria-hidden="true"
+                    />
+                  </a>
                 </li>
                 <li>
-                  <a href="/">Google+</a>
+                  <a className="is-clearfix" href="/">
+                    Google+
+                    <i
+                      className="fa fa-google-plus-square google-plus is-pulled-right"
+                      aria-hidden="true"
+                    />
+                  </a>
                 </li>
                 <li>
-                  <a href="/">Instagram</a>
+                  <a className="is-clearfix" href="/">
+                    Instagram
+                    <i
+                      className="fa fa-instagram instagram is-pulled-right"
+                      aria-hidden="true"
+                    />
+                  </a>
                 </li>
               </ul>
             </aside>

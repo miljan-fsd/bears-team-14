@@ -1,0 +1,17 @@
+.menu-label {
+  border-bottom: 2px solid #000;
+  padding-bottom: 15px;
+}
+
+.menu-list a {
+  text-transform: uppercase;
+}
+.menu-list a:hover {
+  color: #00f;
+}
+
+@media screen AND (max-width: 768px) {
+  .address {
+    font-size: 13px;
+  }
+}

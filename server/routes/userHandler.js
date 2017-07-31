@@ -1,3 +1,4 @@
+const JobsHandler = require(__dirname + '/../controllers/JobsHandler.js');
 const Router = require('express').Router();
 
 // Dummy route to demonstrate authentication (not implemented yet)
@@ -28,6 +29,8 @@ Router.delete('/test/', (req, res) => {
     data: 'Test delete',
   });
 });
+
+Router.get('/jobs/', JobsHandler.getAll);
 
 function isLoggedIn(req, res, next) {
   //TODO

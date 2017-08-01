@@ -8,7 +8,12 @@ const Home = ({ data }) =>
     <FeaturedItems>
       {data.length
         ? data.map((item, i) =>
-            <ItemCard key={item.id} {...item.info} expDate={item.expDate} />
+            <ItemCard
+              key={item.id}
+              id={item.id}
+              {...item.info}
+              expDate={item.expDate}
+            />
           )
         : <div>Loading...</div>}
     </FeaturedItems>

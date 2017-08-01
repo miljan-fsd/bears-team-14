@@ -36,7 +36,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="section">
+        <div className="app-wrapper">
           <Header />
           <Main data={this.state.data} />
           <Footer />

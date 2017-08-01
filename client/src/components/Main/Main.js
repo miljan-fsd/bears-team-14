@@ -11,7 +11,7 @@ import Join from '../Join';
 import Hiring from '../Hiring';
 
 const Main = props =>
-  <div>
+  <div className="main-wrapper">
     <Route exact path="/" render={() => <Home data={props.data} />} />
     <Route path="/job/:id" component={ItemDetails} />
     <Route path="/jobs" component={Jobs} />

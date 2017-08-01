@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import './style.css';
 
@@ -14,13 +15,13 @@ class Footer extends Component {
               </p>
               <ul className="menu-list">
                 <li>
-                  <a href="/">Home</a>
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="/jobs">Explore Jobs</a>
+                  <Link to="/jobs">Explore Jobs</Link>
                 </li>
                 <li>
-                  <a href="/join">Join Jobbatical</a>
+                  <Link to="/join">Join Jobbatical</Link>
                 </li>
               </ul>
             </aside>
@@ -33,13 +34,13 @@ class Footer extends Component {
               </p>
               <ul className="menu-list">
                 <li>
-                  <a href="/">What we offer</a>
+                  <Link to="/">What we offer</Link>
                 </li>
                 <li>
-                  <a href="/">Pricing</a>
+                  <Link to="/">Pricing</Link>
                 </li>
                 <li>
-                  <a href="/">Customers</a>
+                  <Link to="/">Customers</Link>
                 </li>
               </ul>
             </aside>
@@ -52,16 +53,16 @@ class Footer extends Component {
               </p>
               <ul className="menu-list">
                 <li>
-                  <a href="/">Our story & People</a>
+                  <Link to="/">Our story & People</Link>
                 </li>
                 <li>
-                  <a href="/">Support</a>
+                  <Link to="/">Support</Link>
                 </li>
                 <li>
-                  <a href="/">Join the Team</a>
+                  <Link to="/">Join the Team</Link>
                 </li>
                 <li>
-                  <a href="/">Blog</a>
+                  <Link to="/">Blog</Link>
                 </li>
               </ul>
             </aside>
@@ -74,49 +75,49 @@ class Footer extends Component {
               </p>
               <ul className="menu-list social">
                 <li>
-                  <a className="is-clearfix" href="/">
+                  <Link className="is-clearfix" to="/">
                     Facebook
                     <i
                       className="fa fa-facebook-square facebook is-pulled-right"
                       aria-hidden="true"
                     />
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="is-clearfix" href="/">
+                  <Link className="is-clearfix" to="/">
                     Twitter
                     <i
                       className="fa fa-twitter-square twitter is-pulled-right"
                       aria-hidden="true"
                     />
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="is-clearfix" href="/">
+                  <Link className="is-clearfix" to="/">
                     LinkedIn
                     <i
                       className="fa fa-linkedin-square linkedin is-pulled-right"
                       aria-hidden="true"
                     />
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="is-clearfix" href="/">
+                  <Link className="is-clearfix" to="/">
                     Google+
                     <i
                       className="fa fa-google-plus-square google-plus is-pulled-right"
                       aria-hidden="true"
                     />
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a className="is-clearfix" href="/">
+                  <Link className="is-clearfix" to="/">
                     Instagram
                     <i
                       className="fa fa-instagram instagram is-pulled-right"
                       aria-hidden="true"
                     />
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </aside>
@@ -127,20 +128,20 @@ class Footer extends Component {
           <div className="column is-two-thirds">
             <p className="address">
               &copy; Jobbatical OÜ Niine 11, 10414, Tallinn, Estonia &nbsp;
-              <a className="has-text-black" href="mailto:hello@jobbatical.com">
+              <Link className="has-text-black" to="mailto:hello@jobbatical.com">
                 hello@jobbatical.com
-              </a>
+              </Link>
             </p>
           </div>
 
           <div className="column">
-            <a className="has-text-dark" href="/">
+            <Link className="has-text-dark" to="/">
               Terms of service
-            </a>
+            </Link>
             &nbsp;
-            <a className="has-text-dark" href="/">
+            <Link className="has-text-dark" to="/">
               Privacy policy
-            </a>
+            </Link>
           </div>
         </div>
       </div>

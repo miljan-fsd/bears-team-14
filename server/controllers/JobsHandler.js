@@ -1,3 +1,4 @@
+const JobsHelper = require('/JobsHelper.js');
 const Job = require('../models/Job.js');
 
 module.exports = {
@@ -12,11 +13,8 @@ module.exports = {
     // Remember the form's data
     const { companyName, title, description, imgUrl, website, location, expDate } = req.body;
 
-    // Split tags string by commas
-    const tags = req.body.tags.split(',');
-
-    // Trim whitespaces around the tags
-    const trimmedTags = tags.map(tag => tag.trim());
+    // Change the form's data as needed
+    const tags = JobsHelper.cleanTags(req.body.tags);
 
     // Create and save the new job as specified by mongoose model
     const cleanedJob = new Job({
@@ -28,7 +26,7 @@ module.exports = {
         website,
       },
       location,
-      tags: trimmedTags,
+      tags,
       expDate: new Date(expDate),
     });
 

@@ -14,78 +14,90 @@ class Login extends Component {
             </div>
             <div className="box">
               <div className="field has-addons">
-                <button className="button is-large is-fullwidth facebook-btn">
+                <a
+                  href="https://web.facebook.com"
+                  className="button is-large is-fullwidth facebook-btn"
+                >
                   <span className="icon is-medium">
                     <i className="fa fa-facebook-square" />
                   </span>
                   <span>Log in with Facebook</span>
-                </button>
+                </a>
               </div>
 
               <div className="field has-addons">
-                <button className="button is-large is-fullwidth google-btn">
+                <a
+                  href="https://google.com"
+                  className="button is-large is-fullwidth google-btn"
+                >
                   <span className="icon is-medium">
                     <i className="fa fa-google" />
                   </span>
                   <span>Log in with Google</span>
-                </button>
+                </a>
               </div>
 
               <div className="field has-addons">
-                <button className="button is-large is-fullwidth linkedin-btn">
+                <a
+                  href="https://www.linkedin.com"
+                  className="button is-large is-fullwidth linkedin-btn"
+                >
                   <span className="icon is-medium">
                     <i className="fa fa-linkedin-square" />
                   </span>
                   <span>Log in with LinkedIn</span>
-                </button>
+                </a>
               </div>
 
               <div className="divider line">OR</div>
-              <div className="field">
-                <label className="label" htmlFor="email">
-                  Your Email
-                </label>
-                <div className="control has-icons-left">
-                  <input
-                    className="input is-large"
-                    type="email"
-                    placeholder="name@example.com"
-                    name="email"
-                  />
-                  <span className="icon is-medium is-left">
-                    <i className="fa fa-envelope" />
-                  </span>
-                </div>
-              </div>
 
-              <div className="field">
-                <label className="label" htmlFor="password">
-                  Password
-                </label>
-                <div className="control has-icons-left">
-                  <input
-                    className="input is-large"
-                    type="password"
-                    placeholder="password"
-                    name="password"
-                  />
-                  <span className="icon is-medium is-left">
-                    <i className="fa fa-lock" />
-                  </span>
+              <form action="#">
+                <div className="field">
+                  <label className="label" htmlFor="email">
+                    Your Email
+                  </label>
+                  <div className="control has-icons-left">
+                    <input
+                      className="input is-large"
+                      type="email"
+                      placeholder="name@example.com"
+                      name="email"
+                    />
+                    <span className="icon is-medium is-left">
+                      <i className="fa fa-envelope" />
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="field has-addons">
-                <button
-                  type="submit"
-                  className="button is-fullwidth is-large is-primary"
-                >
-                  <span>LOG IN</span>
-                  <span className="icon is-medium">
-                    <i className="fa fa-sign-in" />
-                  </span>
-                </button>
-              </div>
+                <div className="field">
+                  <label className="label" htmlFor="password">
+                    Password
+                  </label>
+                  <div className="control has-icons-left">
+                    <input
+                      className="input is-large"
+                      type="password"
+                      placeholder="password"
+                      name="password"
+                    />
+                    <span className="icon is-medium is-left">
+                      <i className="fa fa-lock" />
+                    </span>
+                  </div>
+                </div>
+
+                <div className="field has-addons">
+                  <button
+                    type="submit"
+                    className="button is-fullwidth is-large is-primary"
+                  >
+                    <span>LOG IN</span>
+                    <span className="icon is-medium">
+                      <i className="fa fa-sign-in" />
+                    </span>
+                  </button>
+                </div>
+              </form>
               <hr />
               <div className="columns">
                 <div className="column">

@@ -1,0 +1,71 @@
+.login {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.head-field {
+	background-color: #1c75bc;
+	color: #fff;
+	padding: 30px 0;
+}
+
+.divider {
+	display: flex;
+}
+
+.divider::before,
+.divider:after {
+	content: "";
+	flex: 1;
+}
+
+.line {
+	align-items: center;
+	margin: 1em -1em;
+}
+
+.line:before,
+.line:after {
+	height: 1px;
+	margin: 0 1em;
+	background: #dbdbdb;
+}
+
+.is-size-10 {
+	font-size: 11px;
+}
+
+.facebook-btn,
+.google-btn,
+.linkedin-btn {
+	justify-content: flex-start;
+	padding-left: 18%;
+	transition: background-color ease-in-out 0.2s, color ease-in-out 0.2s;
+}
+
+.facebook-btn {
+	color: #3b5998;
+}
+
+.facebook-btn:hover {
+	background-color: #3b5998;
+	color: #fff;
+}
+
+.google-btn {
+	color: #dd4b39;
+}
+
+.google-btn:hover {
+	background-color: #dd4b39;
+	color: #fff;
+}
+
+.linkedin-btn {
+	color: #007bb6;
+}
+
+.linkedin-btn:hover {
+	background-color: #007bb6;
+	color: #fff;
+}

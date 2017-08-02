@@ -8,13 +8,13 @@ class Login extends Component {
     return (
       <div className="login">
         <div className="columns">
-          <div className="column is-one-third is-offset-one-third">
+          <div className="column is-half is-offset-one-quarter">
             <div className="head-field has-text-centered">
               <h2 className="is-size-4">Log in to Jobbatical</h2>
             </div>
             <div className="box">
               <div className="field has-addons">
-                <button className="button is-large is-fullwidth facebook-btn is-outlined">
+                <button className="button is-large is-fullwidth facebook-btn">
                   <span className="icon is-medium">
                     <i className="fa fa-facebook-square" />
                   </span>
@@ -23,7 +23,7 @@ class Login extends Component {
               </div>
 
               <div className="field has-addons">
-                <button className="button is-large is-fullwidth google-btn is-outlined">
+                <button className="button is-large is-fullwidth google-btn">
                   <span className="icon is-medium">
                     <i className="fa fa-google" />
                   </span>
@@ -32,7 +32,7 @@ class Login extends Component {
               </div>
 
               <div className="field has-addons">
-                <button className="button is-large is-fullwidth linkedin-btn is-outlined">
+                <button className="button is-large is-fullwidth linkedin-btn">
                   <span className="icon is-medium">
                     <i className="fa fa-linkedin-square" />
                   </span>
@@ -40,9 +40,7 @@ class Login extends Component {
                 </button>
               </div>
 
-              <div className="divider line" contenteditable>
-                OR
-              </div>
+              <div className="divider line">OR</div>
               <div className="field">
                 <label className="label" htmlFor="email">
                   Your Email
@@ -51,7 +49,7 @@ class Login extends Component {
                   <input
                     className="input is-large"
                     type="email"
-                    placeholder="yourname@example.com"
+                    placeholder="name@example.com"
                     name="email"
                   />
                   <span className="icon is-medium is-left">

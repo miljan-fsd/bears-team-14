@@ -10,8 +10,9 @@ const jobSchema = new mongoose.Schema({
   },
   location: { type: String, default: '' },
   tags: [{ type: String, default: '' }],
-  isFeatured: Boolean,
+  isFeatured: { type: Boolean, default: false },
   expDate: Date,
+  created_at: { type: Date, required: true, default: Date.now() },
 });
 
 const jobModel = mongoose.model('Job', jobSchema);

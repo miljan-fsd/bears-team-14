@@ -36,6 +36,8 @@ Router.delete('/test/', (req, res) => {
 
 Router.get('/jobs/', catchErrors(JobsHandler.getAll));
 
+Router.post('/jobs/create', catchErrors(JobsHandler.createNew));
+
 function isLoggedIn(req, res, next) {
   //TODO
   return false;

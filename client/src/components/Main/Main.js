@@ -10,14 +10,24 @@ import Login from '../Login';
 import Join from '../Join';
 import Hiring from '../Hiring';
 
-const Main = props =>
-  <div className="main-wrapper">
-    <Route exact path="/" render={() => <Home data={props.data} />} />
-    <Route path="/job/:id" component={ItemDetails} />
-    <Route path="/jobs" component={Jobs} />
-    <Route path="/login" component={Login} />
-    <Route path="/join" component={Join} />
-    <Route path="/hiring" component={Hiring} />
-  </div>;
+class Main extends React.Component {
+  componentDidUpdate() {
+    window.scrollTo(0, 0);
+  }
+
+  render() {
+    const { data } = this.props;
+    return (
+      <div className="main-wrapper">
+        <Route exact path="/" render={() => <Home data={data} />} />
+        <Route path="/job/:id" component={ItemDetails} />
+        <Route path="/jobs" component={Jobs} />
+        <Route path="/login" component={Login} />
+        <Route path="/join" component={Join} />
+        <Route path="/hiring" component={Hiring} />
+      </div>
+    );
+  }
+}
 
 export default Main;

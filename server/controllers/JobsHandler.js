@@ -64,4 +64,13 @@ module.exports = {
 
     res.status(204).end();
   },
+  /*
+    Deletes a job.
+    Parameters: job id.
+  */
+  deleteJob: async function(req, res) {
+    await Job.findByIdAndRemove(req.params.jobId);
+
+    res.status(204).end();
+  },
 };

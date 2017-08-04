@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jenovs/bears-team-14.svg?branch=development)](https://travis-ci.org/jenovs/bears-team-14)
+
 # Bears Team #14
 
 ## Jobbatical clone!

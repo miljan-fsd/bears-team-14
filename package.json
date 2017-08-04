@@ -4,7 +4,7 @@
   "description": "## Jobbatical clone!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "npm-run-all --parallel watch:server start:client",
     "watch:server": "nodemon server.js",
     "start:client": "cd client && yarn start",
@@ -27,5 +27,10 @@
     "mongoose": "^4.11.4",
     "nodemon": "^1.11.0",
     "npm-run-all": "^4.0.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.5.0"
   }
 }

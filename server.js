@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const config = require('./server/_config.js');
 const ErrorHandler = require('./server/controllers/ErrorHandler.js');
 
 // ===== App Setup =====
@@ -25,15 +26,20 @@ const userHandler = require('./server/routes/userHandler');
 
 // ===== Mongoose Setup =====
 mongoose.Promise = global.Promise;
-const USER = process.env.DB_USER;
-const PASS = process.env.DB_PASS;
-const HOST = process.env.DB_HOST;
-const DB_PORT = process.env.DB_PORT;
-const DB = process.env.DB;
-
-mongoose.connect(`mongodb://${USER}:${PASS}@${HOST}:${DB_PORT}/${DB}`, {
-  useMongoClient: true,
-});
+mongoose
+  .connect(config.mongoURI[app.settings.env], {
+    useMongoClient: true,
+  })
+  .then(
+    () => {
+      console.log(
+        'Connected to Database: ' + config.mongoURI[app.settings.env]
+      );
+    },
+    err => {
+      console.log('Error connecting to the Database. ' + err);
+    }
+  );
 
 // ===== Server Setup =====
 const PORT = process.env.PORT || 3001;
@@ -45,6 +51,6 @@ app.use('/api/v1', userHandler);
 // ====== Error Handler Middleware =====
 app.use(ErrorHandler);
 
-app.listen(PORT, () => {
+module.exports = app.listen(PORT, () => {
   console.log('API listening on port ' + PORT);
 });

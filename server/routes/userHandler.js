@@ -38,6 +38,10 @@ Router.get('/jobs/', catchErrors(JobsHandler.getAll));
 
 Router.post('/jobs/create', catchErrors(JobsHandler.createNew));
 
+Router.put('/job/:jobId', catchErrors(JobsHandler.updateJob));
+
+Router.delete('/job/:jobId', catchErrors(JobsHandler.deleteJob));
+
 function isLoggedIn(req, res, next) {
   //TODO
   return false;

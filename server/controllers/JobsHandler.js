@@ -7,11 +7,19 @@ module.exports = {
 
     if (!jobs) throw 'No jobs found!';
 
-    res.json(jobs);
+    res.status(200).json(jobs);
   },
   createNew: async function(req, res) {
     // Remember the form's data
-    const { companyName, title, description, imgUrl, website, location, expDate } = req.body;
+    const {
+      companyName,
+      title,
+      description,
+      imgUrl,
+      website,
+      location,
+      expDate,
+    } = req.body;
 
     // Change the form's data as needed
     const tags = JobsHelper.cleanTags(req.body.tags);
@@ -32,7 +40,9 @@ module.exports = {
 
     await cleanedJob.save();
 
-    res.status(201).end();
+    res.status(201).json({
+      SUCCESS: cleanedJob,
+    });
   },
   /*
     Updates a job with any fields that have been sent as a request body.
@@ -40,8 +50,18 @@ module.exports = {
   */
   updateJob: async function(req, res) {
     // Remember the request's data
-    const { companyName, title, description, imgUrl, website, location, expDate, tags, isFeatured } = req.body;
-    
+    const {
+      companyName,
+      title,
+      description,
+      imgUrl,
+      website,
+      location,
+      expDate,
+      tags,
+      isFeatured,
+    } = req.body;
+
     // Find the job by an id that was passed in
     let job = await Job.findById(req.params.jobId);
 
@@ -54,23 +74,33 @@ module.exports = {
     job.info.imgUrl = imgUrl || job.info.imgUrl;
     job.info.website = website || job.info.website;
     job.location = location || job.location;
-    job.tags = tags ? JobsHelper.cleanTags : job.tags;
+    job.tags = tags ? JobsHelper.cleanTags(tags) : job.tags;
     // If isFeature is either a 'true' or 'false', assign the boolean representation, else don't update
-    job.isFeatured = ~['true', 'false'].indexOf(isFeatured) ? Boolean(isFeatured && isFeatured.replace(/false/, '')) : job.isFeatured;
+    job.isFeatured = ~['true', 'false'].indexOf(isFeatured)
+      ? Boolean(isFeatured && isFeatured.replace(/false/, ''))
+      : job.isFeatured;
     job.expDate = expDate ? new Date(expDate) : job.expDate;
-    
+
     // Save the job
     await job.save();
 
-    res.status(204).end();
+    res.status(200).json({
+      UPDATED: job,
+    });
   },
   /*
     Deletes a job.
     Parameters: job id.
   */
   deleteJob: async function(req, res) {
-    await Job.findByIdAndRemove(req.params.jobId);
+    const jobId = req.params.jobId;
+    let job = await Job.findByIdAndRemove(jobId);
 
-    res.status(204).end();
+    res.status(200).json({
+      REMOVED: {
+        name: job.info.title,
+        _id: jobId,
+      },
+    });
   },
 };

@@ -5,3 +5,5 @@ notifications:
   email: false
 services:
   - mongodb
+env:
+  - TEST_DB_URI="mongodb://localhost:27017/test"

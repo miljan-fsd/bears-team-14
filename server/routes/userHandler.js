@@ -38,6 +38,8 @@ Router.get('/jobs/', catchErrors(JobsHandler.getAll));
 
 Router.post('/job/create', catchErrors(JobsHandler.createNew));
 
+Router.get('/job/:jobId', catchErrors(JobsHandler.getOne));
+
 Router.put('/job/:jobId', catchErrors(JobsHandler.updateJob));
 
 Router.delete('/job/:jobId', catchErrors(JobsHandler.deleteJob));

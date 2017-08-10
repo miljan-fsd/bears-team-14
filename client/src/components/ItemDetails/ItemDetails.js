@@ -1,61 +1,10 @@
 import React from 'react';
+import marked from 'marked';
 // import PropTypes from 'prop-types';
 
 import './style.css';
 
-const dummyData = [
-  {
-    id: 1,
-    companyId: 'cGLSxH4',
-    companyName: 'StudyPortals',
-    info: {
-      title: 'Account Manager (Continental Europe)',
-      description: {
-        responsibilities: `<ul>
-        <li>Praesent id massa id nisl venenatis lacinia.</li>
-        <li>Aenean sit amet justo.</li>
-        <li>Morbi ut odio.</li>
-        <li>Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.</li>
-        <li>In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-        <li>Praesent id massa id nisl venenatis lacinia.</li>
-        <li>Aenean sit amet justo.</li>
-        <li>Morbi ut odio.</li>
-        <li>Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.</li>
-        <li>In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-      </ul>`,
-        requirements: `<ul>
-        <li>Praesent id massa id nisl venenatis lacinia.</li>
-        <li>Aenean sit amet justo.</li>
-        <li>Morbi ut odio.</li>
-        <li>Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.</li>
-        <li>In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-        <li>Praesent id massa id nisl venenatis lacinia.</li>
-        <li>Aenean sit amet justo.</li>
-        <li>Morbi ut odio.</li>
-        <li>Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.</li>
-        <li>In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
-      </ul>`,
-        compensation: `<li>Praesent id massa id nisl venenatis lacinia.</li>
-      <li>Aenean sit amet justo.</li>
-      <li>Morbi ut odio.</li>
-      <li>Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.</li>
-      <li>In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>`,
-      },
-      imgUrl:
-        'https://jobbatical.com/upload/upload_5188aa8befe95a0f610ada07dce8c408.jpg',
-      website: 'studyportals.com',
-      social: [
-        'facebook.com/studyportalscareers',
-        'twitter.com/@studyportalsdev',
-        'linkedin.com/company/studyportals',
-      ],
-    },
-    tags: ['Account', 'Manager', 'Europe', 'Sales', 'Spanish', 'German', 'EU'],
-    isFeatured: true,
-    expDate: 1504224000000,
-    location: 'Eindhoven, Netherlands',
-  },
-];
+import dummyData from './dummyData';
 
 function formatDate(unix) {
   const days = ~~((unix - Date.now()) / 86400000);
@@ -104,7 +53,7 @@ const ItemDetails = props => {
             )}
           </div>
         </div>
-        <p className="subtitle">JOB DESCRIPTION</p>
+        <p className="item-details__subtitle subtitle">JOB DESCRIPTION</p>
         {Object.keys(data.info.description).map((key, i) =>
           <div className="section" key={i}>
             <div className="content">
@@ -115,12 +64,14 @@ const ItemDetails = props => {
                 {key}
               </p>
               <p
-                dangerouslySetInnerHTML={{ __html: data.info.description[key] }}
+                dangerouslySetInnerHTML={{
+                  __html: marked(data.info.description[key]),
+                }}
               />
             </div>
           </div>
         )}
-        <p className="subtitle">THE COMPANY</p>
+        <p className="item-details__subtitle subtitle">THE COMPANY</p>
         <div className="section">
           <p className="title is-4">
             About {data.companyName}

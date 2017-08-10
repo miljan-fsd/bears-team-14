@@ -7,13 +7,19 @@ const Home = ({ data }) =>
   <div>
     <FeaturedItems>
       {data.length
-        ? data.map((item, i) =>
-            <ItemCard
-              key={item.id}
-              id={item.id}
-              {...item.info}
-              expDate={item.expDate}
-            />
+        ? data.map(
+            (item, i) =>
+              item.isFeatured &&
+              <ItemCard
+                {...item.info}
+                {...item}
+                key={item._id}
+                id={item._id}
+                imgUrl={
+                  item.info.imgUrl &&
+                  item.info.imgUrl.replace(/upload\//, 'upload/thumbs/')
+                }
+              />
           )
         : <div>Loading...</div>}
     </FeaturedItems>

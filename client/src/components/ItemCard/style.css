@@ -1,7 +1,10 @@
+:root {
+  --main-color: rgb(28, 117, 188);
+}
+
 .item-card {
   box-sizing: border-box;
   border: 1px solid rgb(238, 238, 238);
-  border-radius: 5px;
   margin: 15px 0;
   height: 400px;
   width: 100%;
@@ -10,11 +13,50 @@
   transition: box-shadow 0.15s;
 }
 
+.item-card:hover {
+}
+
+.item-card > a {
+  color: #333;
+}
+
 .item-card__description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 30px;
+  height: 96px;
+}
+
+.item-card__description > h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.item-card__details {
+  color: rgb(155, 155, 155);
+  font-size: 13px;
+  text-transform: uppercase;
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: clip;
+}
+
+.item-card__at-company {
+  color: rgb(102, 102, 102);
+}
+
+.item-card__footer {
+  color: rgb(155, 155, 155);
+  font-size: 13px;
+  padding-left: 30px;
+  text-transform: uppercase;
+}
+
+.item-card__time-amount {
+  color: rgb(38, 185, 153);
+  font-weight: bold;
 }
 
 .item-card:hover {
@@ -24,7 +66,8 @@
 .item-card__image {
   background-size: cover;
   background-position: 50% 50%;
-  height: 200px;
+  border-radius: 5px 5px 0 0;
+  height: 240px;
 }
 
 @media (min-width: 1200px) {

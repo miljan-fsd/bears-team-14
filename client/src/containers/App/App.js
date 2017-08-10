@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import './App.css';
-import api from '../../fakeApi';
+// import api from '../../fakeApi';
+import api from '../../api';
 
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -26,7 +27,7 @@ class App extends Component {
     try {
       json = await api.getItems();
       this.setState(() => ({
-        data: json.data,
+        data: json,
       }));
     } catch (e) {
       console.error(e);

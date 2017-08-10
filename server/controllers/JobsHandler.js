@@ -45,6 +45,17 @@ module.exports = {
     });
   },
   /*
+    Returns one job as specified by a parameter.
+    Parameters: job id.
+  */
+  getOne: async function(req, res) {
+    let job = await Job.findById(req.params.jobId);
+
+    if (!job) throw 'No job found!';
+
+    res.status(200).json(job);
+  },
+  /*
     Updates a job with any fields that have been sent as a request body.
     Parameters: job id.
   */

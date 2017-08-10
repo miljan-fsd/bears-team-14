@@ -97,6 +97,38 @@ describe('Jobs', function() {
     });
   });
 
+  describe('#GET ONE', function() {
+    it('should list ONE job on /job/<id> GET', async function() {
+      let jobs = await chai.request(server).get('/api/v1/jobs/');
+
+      let res = await chai
+        .request(server)
+        .get('/api/v1/job/' + jobs.body[0]._id);
+
+      res.should.have.status(200);
+      res.body.should.be.a('object');
+      res.body.should.have.property('_id');
+      res.body.should.have.property('companyName');
+      res.body.should.have.property('info').with.property('title');
+      res.body.should.have.property('info').with.property('description');
+      res.body.should.have.property('info').with.property('imgUrl');
+      res.body.should.have.property('info').with.property('website');
+      res.body.should.have.property('location');
+      res.body.should.have.property('tags');
+      res.body.should.have.property('expDate');
+      res.body.companyName.should.equal(jobs.body[0].companyName);
+      res.body.info.title.should.equal(jobs.body[0].info.title);
+      res.body.info.description.should.equal(jobs.body[0].info.description);
+      res.body.info.imgUrl.should.equal(jobs.body[0].info.imgUrl);
+      res.body.info.website.should.equal(jobs.body[0].info.website);
+      res.body.location.should.equal(jobs.body[0].location);
+      res.body.tags.should.deep.equal(jobs.body[0].tags);
+      new Date(res.body.expDate).should.deep.equal(
+        new Date(jobs.body[0].expDate)
+      );
+    });
+  });
+
   describe('#PUT', function() {
     it("should update a SINGLE job's ONE property (companyName) on /job/<id> PUT", async function() {
       const newCompanyName = 'Google';

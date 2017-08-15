@@ -69,17 +69,3 @@
   border-radius: 5px 5px 0 0;
   height: 240px;
 }
-
-@media (min-width: 1200px) {
-  .item-card {
-    width: 30%;
-    margin: 15px;
-  }
-}
-
-@media (min-width: 768px) AND (max-width: 1199px) {
-  .item-card {
-    width: 45%;
-    margin: 15px;
-  }
-}

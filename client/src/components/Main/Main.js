@@ -21,7 +21,7 @@ class Main extends React.Component {
       <div className="main-wrapper">
         <Route exact path="/" render={() => <Home data={data} />} />
         <Route path="/job/:id" component={ItemDetails} />
-        <Route path="/jobs" component={Jobs} />
+        <Route path="/jobs" render={() => <Jobs data={data} />} />
         <Route path="/login" component={Login} />
         <Route path="/join" component={Join} />
         <Route path="/hiring" component={Hiring} />

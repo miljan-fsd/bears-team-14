@@ -1,0 +1,21 @@
+.jobs {
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: 1fr;
+  margin: auto;
+  max-width: 1170px;
+  padding: 15px;
+  width: 100%;
+}
+
+@media (min-width: 768px) AND (max-width: 1199px) {
+  .jobs {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1200px) {
+  .jobs {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

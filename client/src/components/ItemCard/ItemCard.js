@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import LazyLoad from 'react-lazyload';
 
 import getRemainingTime from './getRemainingTime';
 
@@ -16,31 +17,37 @@ const ItemCard = ({
   companyName,
   location,
 }) =>
-  <div className="item-card">
-    <Link to={`/job/${id}`}>
-      <div
-        style={{ backgroundImage: `url(${imgUrl})` }}
-        className="item-card__image"
-      />
-      <div className="item-card__description">
-        <h2>
-          {title}
-        </h2>
-        <div className="item-card__details">
-          At <span className="item-card__at-company">{companyName}</span>{' '}
-          {location}
+  <LazyLoad
+    height="400"
+    once={true}
+    placeholder={<div style={{ height: 400 }}>Loading...</div>}
+  >
+    <div className="item-card">
+      <Link to={`/job/${id}`}>
+        <div
+          style={{ backgroundImage: `url(${imgUrl})` }}
+          className="item-card__image"
+        />
+        <div className="item-card__description">
+          <h2>
+            {title}
+          </h2>
+          <div className="item-card__details">
+            At <span className="item-card__at-company">{companyName}</span>{' '}
+            {location}
+          </div>
         </div>
-      </div>
-      <div className="item-card__footer">
-        <div className="item-card__remaining-time">
-          <span className="item-card__time-amount">
-            {getRemainingTime(expDate)}
-          </span>{' '}
-          to apply
+        <div className="item-card__footer">
+          <div className="item-card__remaining-time">
+            <span className="item-card__time-amount">
+              {getRemainingTime(expDate)}
+            </span>{' '}
+            to apply
+          </div>
         </div>
-      </div>
-    </Link>
-  </div>;
+      </Link>
+    </div>
+  </LazyLoad>;
 
 ItemCard.propTypes = {
   id: PropTypes.string.isRequired,

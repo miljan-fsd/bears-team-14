@@ -19,15 +19,15 @@ export const Wrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 30px;
-    width: 750px;
+    width: 720px;
   }
 
   @media (min-width: ${breakMiddle}px) {
-    width: 970px;
+    width: 940px;
   }
 
   @media (min-width: ${breakLarge}px) {
     grid-template-columns: 1fr 1fr 1fr;
-    width: 1170px;
+    width: 1140px;
   }
 `;

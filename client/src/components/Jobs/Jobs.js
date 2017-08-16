@@ -1,13 +1,11 @@
 import React from 'react';
-import LazyLoad from 'react-lazyload';
 
+import FeaturedItems from '../FeaturedItems';
 import ItemCard from '../ItemCard';
-
-import './style.css';
 
 const Jobs = props => {
   return (
-    <div className="jobs">
+    <FeaturedItems>
       {props.data.map(job =>
         <ItemCard
           key={job._id}
@@ -23,7 +21,7 @@ const Jobs = props => {
           location={job.location}
         />
       )}
-    </div>
+    </FeaturedItems>
   );
 };
 

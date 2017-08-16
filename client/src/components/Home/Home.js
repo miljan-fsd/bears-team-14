@@ -3,7 +3,7 @@ import React from 'react';
 import FeaturedItems from '../FeaturedItems';
 import ItemCard from '../ItemCard';
 
-const Home = ({ data }) =>
+const Home = ({ ...props, data }) =>
   <div>
     <FeaturedItems>
       {data.length
@@ -11,6 +11,7 @@ const Home = ({ data }) =>
             (item, i) =>
               item.isFeatured &&
               <ItemCard
+                {...props}
                 {...item.info}
                 {...item}
                 key={item._id}

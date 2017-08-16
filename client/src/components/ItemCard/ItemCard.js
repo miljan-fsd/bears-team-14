@@ -1,13 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
 
 import getRemainingTime from './getRemainingTime';
 
-import './style.css';
+import {
+  Bookmark,
+  Description,
+  DescriptionText,
+  Details,
+  Footer,
+  GreenSpan,
+  Image,
+  Save,
+  Title,
+  Wrapper,
+} from './style.js';
+
+const handleClick = (id, history, e) => {
+  const name = e.target.dataset.name;
+
+  if (name === 'save') return console.log('Saving...');
+
+  history && history.push(`/job/${id}`);
+};
 
 const ItemCard = ({
+  ...props,
   id,
   imgUrl,
   title,
@@ -22,31 +41,39 @@ const ItemCard = ({
     once={true}
     placeholder={<div style={{ height: 400 }}>Loading...</div>}
   >
-    <div className="item-card">
-      <Link to={`/job/${id}`}>
-        <div
-          style={{ backgroundImage: `url(${imgUrl})` }}
-          className="item-card__image"
-        />
-        <div className="item-card__description">
-          <h2>
-            {title}
-          </h2>
-          <div className="item-card__details">
-            At <span className="item-card__at-company">{companyName}</span>{' '}
-            {location}
-          </div>
+    <Wrapper onClick={handleClick.bind(null, id, props.history)}>
+      <Image
+        style={{ backgroundImage: `url(${imgUrl})` }}
+        // style={{ backgroundImage: `url('/placeholder-image.png')` }}
+      />
+      <Description>
+        <Title>
+          {title}
+        </Title>
+        <Details>
+          At <span style={{ color: 'rgb(102, 102, 102)' }}>
+            {companyName}
+          </span>{' '}
+          {location}
+          <DescriptionText>
+            {JSON.parse(description)
+              .responsibilities.replace(/\n/g, ' *')
+              .trim()}
+          </DescriptionText>
+        </Details>
+      </Description>
+      <Footer>
+        <div>
+          <GreenSpan>{getRemainingTime(expDate)}</GreenSpan> to apply
         </div>
-        <div className="item-card__footer">
-          <div className="item-card__remaining-time">
-            <span className="item-card__time-amount">
-              {getRemainingTime(expDate)}
-            </span>{' '}
-            to apply
-          </div>
-        </div>
-      </Link>
-    </div>
+        <Save data-name="save">
+          Save{' '}
+          <Bookmark>
+            <i className="fa fa-bookmark" aria-hidden="true" />
+          </Bookmark>
+        </Save>
+      </Footer>
+    </Wrapper>
   </LazyLoad>;
 
 ItemCard.propTypes = {

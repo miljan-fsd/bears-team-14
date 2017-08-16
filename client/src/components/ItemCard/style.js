@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const breakSmall = 768;
-const mainColor: `rgb(28, 117, 188);`
+const mainColor = `rgb(28, 117, 188);`;
 
 export const Save = styled.div`
   display: flex;

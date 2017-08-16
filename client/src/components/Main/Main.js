@@ -17,9 +17,14 @@ class Main extends React.Component {
 
   render() {
     const { data } = this.props;
+    const props = this.props;
     return (
       <div className="main-wrapper">
-        <Route exact path="/" render={() => <Home data={data} />} />
+        <Route
+          exact
+          path="/"
+          render={props => <Home {...props} data={data} />}
+        />
         <Route path="/job/:id" component={ItemDetails} />
         <Route path="/jobs" render={() => <Jobs data={data} />} />
         <Route path="/login" component={Login} />

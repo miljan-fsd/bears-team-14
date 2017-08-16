@@ -3,6 +3,8 @@ import React from 'react';
 import FeaturedItems from '../FeaturedItems';
 import ItemCard from '../ItemCard';
 
+const parseImgUrl = url => url.replace(/upload\//, 'upload/thumbs/');
+
 const Jobs = props => {
   return (
     <FeaturedItems>
@@ -10,10 +12,7 @@ const Jobs = props => {
         <ItemCard
           key={job._id}
           id={job._id}
-          imgUrl={
-            job.info.imgUrl &&
-            job.info.imgUrl.replace(/upload\//, 'upload/thumbs/')
-          }
+          imgUrl={job.info.imgUrl && parseImgUrl(job.info.imgUrl)}
           title={job.info.title}
           description={job.info.description}
           expDate={job.expDate}

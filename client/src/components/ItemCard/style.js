@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const breakSmall = 768;
-const mainColor = `rgb(28, 117, 188);`;
+import { breakSmall } from './../../common-styles/layout';
+// const mainColor = `rgb(28, 117, 188);`;
 
 export const Save = styled.div`
   display: flex;
@@ -101,7 +101,6 @@ export const Wrapper = styled.div`
   flex-direction: column;
   font-family: "Open Sans", Helvetica, sans-serif;
   height: 400px;
-  margin: 15px 0;
   max-width: 740px;
   transition: box-shadow 0.4s ease;
   width: 100%;

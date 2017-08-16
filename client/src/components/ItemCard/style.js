@@ -37,6 +37,7 @@ export const Description = styled.div`
   height: 96px;
   margin: auto 15px;
   margin-bottom: 0;
+  overflow: hidden;
   padding: 24px 0;
   padding-bottom: 0;
 `;

@@ -15,6 +15,7 @@ class App extends Component {
 
     this.state = {
       data: [],
+      featured: [],
     };
   }
 
@@ -23,11 +24,12 @@ class App extends Component {
   }
 
   async getItems() {
-    let json = [];
     try {
-      json = await api.getItems();
+      const data = await api.getItems();
+      const featured = data.filter(item => item.isFeatured);
       this.setState(() => ({
-        data: json,
+        data,
+        featured,
       }));
     } catch (e) {
       console.error(e);
@@ -35,11 +37,12 @@ class App extends Component {
   }
 
   render() {
+    const { data, featured } = this.state;
     return (
       <Router>
         <div className="app-wrapper">
           <Header />
-          <Main data={this.state.data} />
+          <Main data={data} featured={featured} />
           <Footer />
         </div>
       </Router>

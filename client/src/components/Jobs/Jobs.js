@@ -5,11 +5,12 @@ import ItemCard from '../ItemCard';
 
 const parseImgUrl = url => url.replace(/upload\//, 'upload/thumbs/');
 
-const Jobs = props => {
+const Jobs = ({ data, ...props }) => {
   return (
     <FeaturedItems>
-      {props.data.map(job =>
+      {data.map(job =>
         <ItemCard
+          {...props}
           key={job._id}
           id={job._id}
           imgUrl={job.info.imgUrl && parseImgUrl(job.info.imgUrl)}

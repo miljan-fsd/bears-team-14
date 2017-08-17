@@ -17,7 +17,7 @@ class Main extends React.Component {
 
   render() {
     const { data } = this.props;
-    const props = this.props;
+
     return (
       <div className="main-wrapper">
         <Route
@@ -26,7 +26,7 @@ class Main extends React.Component {
           render={props => <Home {...props} data={data} />}
         />
         <Route path="/job/:id" component={ItemDetails} />
-        <Route path="/jobs" render={() => <Jobs data={data} />} />
+        <Route path="/jobs" render={props => <Jobs {...props} data={data} />} />
         <Route path="/login" component={Login} />
         <Route path="/join" component={Join} />
         <Route path="/hiring" component={Hiring} />

@@ -7,12 +7,14 @@ import {
 } from './../../common-styles/layout';
 
 export const Wrapper = styled.div`
+  align-items: center;
   box-sizing: border-box;
   padding: 0 15px;
   display: flex;
   flex-direction: column;
   width: 100%;
   margin: auto;
+  margin-top: 32px;
   max-width: 1170px;
 
   @media (min-width: ${breakSmall}px) {

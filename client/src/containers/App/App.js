@@ -9,12 +9,16 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Main from '../../components/Main';
 
+const maxFeatured = 9;
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       data: [],
+      featured: [],
+      loading: true,
     };
   }
 
@@ -23,11 +27,16 @@ class App extends Component {
   }
 
   async getItems() {
-    let json = [];
     try {
-      json = await api.getItems();
+      const data = await api.getItems();
+      const featured = data
+        .filter(item => item.isFeatured)
+        .slice(0, maxFeatured);
+
       this.setState(() => ({
-        data: json,
+        data,
+        featured,
+        loading: false,
       }));
     } catch (e) {
       console.error(e);
@@ -35,11 +44,12 @@ class App extends Component {
   }
 
   render() {
+    const { data, featured, loading } = this.state;
     return (
       <Router>
         <div className="app-wrapper">
           <Header />
-          <Main data={this.state.data} />
+          <Main data={data} featured={featured} loading={loading} />
           <Footer />
         </div>
       </Router>

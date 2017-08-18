@@ -1,11 +1,35 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import FeaturedItems from '../FeaturedItems';
-import { HeroImage, Title, Wrapper } from './style';
+import {
+  HeroButton,
+  HeroContent,
+  HeroFooter,
+  HeroWrapper,
+  HeroTitle,
+  Title,
+  Wrapper,
+} from './style';
 
-const Home = ({ data, loading, ...props }) =>
+const Home = ({ data, loading, total, ...props }) =>
   <Wrapper>
-    <HeroImage />
+    <HeroWrapper>
+      <HeroTitle>
+        Lorem. Ipsum.<br />
+        <strong>Dolor sit amet</strong>
+      </HeroTitle>
+      <HeroContent>
+        <Link to="/jobs/">
+          <HeroButton>
+            <i className="fa fa-search" aria-hidden="true" />Explore all jobs
+          </HeroButton>
+        </Link>
+      </HeroContent>
+      <HeroFooter>
+        Currently <strong>{total}</strong> jobs available
+      </HeroFooter>
+    </HeroWrapper>
     <Title>Featured Jobs</Title>
     {!loading
       ? <FeaturedItems {...props} data={data} />

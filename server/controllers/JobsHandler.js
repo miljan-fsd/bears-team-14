@@ -70,8 +70,12 @@ module.exports = {
       location,
       expDate,
       tags,
-      isFeatured,
+      // isFeatured,
     } = req.body;
+
+    // HACK Data from front is sent as JSON,
+    // so isFeatured is already Boolean
+    const isFeatured = String(req.body.isFeatured);
 
     // Find the job by an id that was passed in
     let job = await Job.findById(req.params.jobId);

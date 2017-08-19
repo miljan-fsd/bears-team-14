@@ -19,6 +19,7 @@ class App extends Component {
       data: [],
       featured: [],
       loading: true,
+      busy: false,
     };
   }
 
@@ -26,30 +27,57 @@ class App extends Component {
     this.getItems();
   }
 
-  async getItems() {
+  getItems = async () => {
     try {
       const data = await api.getItems();
-      const featured = data
-        .filter(item => item.isFeatured)
-        .slice(0, maxFeatured);
+      const featured = data.filter(item => item.isFeatured);
 
       this.setState(() => ({
         data,
         featured,
         loading: false,
+        busy: false,
       }));
     } catch (e) {
       console.error(e);
     }
-  }
+  };
+
+  deleteItem = async id => {
+    this.setState(() => ({
+      busy: true,
+    }));
+    try {
+      const res = await api.deleteItem(id);
+      this.getItems();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  updateItem = async (id, data) => {
+    this.setState(() => ({
+      busy: true,
+    }));
+
+    try {
+      const res = await api.updateItem(id, data);
+      this.getItems();
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   render() {
-    const { data, featured, loading } = this.state;
     return (
       <Router>
         <div className="app-wrapper">
           <Header />
-          <Main data={data} featured={featured} loading={loading} />
+          <Main
+            {...this.state}
+            deleteItem={this.deleteItem}
+            updateItem={this.updateItem}
+          />
           <Footer />
         </div>
       </Router>

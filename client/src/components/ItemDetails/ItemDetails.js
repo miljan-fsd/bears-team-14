@@ -4,6 +4,7 @@ import marked from 'marked';
 
 import './style.css';
 
+import { withScrollToTop } from '../hocs/withScrollToTop';
 import dummyData from './dummyData';
 
 function formatDate(unix) {
@@ -11,7 +12,7 @@ function formatDate(unix) {
   return days;
 }
 
-const ItemDetails = props => {
+const ItemDetails = withScrollToTop(props => {
   const data = dummyData[0];
 
   return (
@@ -106,7 +107,7 @@ const ItemDetails = props => {
       </div>
     </div>
   );
-};
+});
 
 ItemDetails.propTypes = {};
 

@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import './style.css';
 
+import AdminPanel from '../AdminPanel';
 import Home from '../Home';
 import ItemDetails from '../ItemDetails';
 import Jobs from '../Jobs';
@@ -11,12 +12,8 @@ import Join from '../Join';
 import Hiring from '../Hiring';
 
 class Main extends React.Component {
-  componentDidUpdate() {
-    window.scrollTo(0, 0);
-  }
-
   render() {
-    const { data, featured } = this.props;
+    const { data, featured, ...rest } = this.props;
 
     return (
       <div className="main-wrapper">
@@ -25,6 +22,17 @@ class Main extends React.Component {
           path="/"
           render={props =>
             <Home {...props} data={featured} total={data.length} />}
+        />
+        <Route
+          path="/admin"
+          render={props =>
+            <AdminPanel
+              {...props}
+              {...rest}
+              data={data}
+              total={data.length}
+              totalFeatured={featured.length}
+            />}
         />
         <Route path="/job/:id" component={ItemDetails} />
         <Route path="/jobs" render={props => <Jobs {...props} data={data} />} />

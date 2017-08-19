@@ -20,7 +20,7 @@ class AdminPanel extends Component {
     switch (e.target.name) {
       case 'date':
         if (e.type !== 'change') break;
-        console.log('date clicked', e.type);
+        this.updateDate(id, e.target.value);
         break;
       case 'featured':
         if (e.type !== 'change') break;
@@ -35,13 +35,13 @@ class AdminPanel extends Component {
       default:
         return;
     }
-    // if (e.target.name === 'date' && e.type === 'change') {
-    //   // console.log('date changed');
-    //   const validDate = this.checkDate(e.target.value);
-    //   if (validDate) {
-    //     console.log('Date valid, updating record...', validDate);
-    //   }
-    // }
+  };
+
+  updateDate = (id, date) => {
+    const validDate = this.checkDate(date);
+    if (validDate) {
+      this.props.updateItem(id, { expDate: validDate });
+    }
   };
 
   componentWillReceiveProps(nextProps) {

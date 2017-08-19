@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Button, DataLine } from './style';
+
 class AdminPanel extends Component {
   constructor(props) {
     super(props);
@@ -62,16 +64,15 @@ class AdminPanel extends Component {
           Total Items: {data.length} | Total Featured: {totalFeatured}
         </div>
         {data.map((item, i) =>
-          <div
+          <DataLine
             key={item._id}
-            style={{ display: 'flex' }}
             onClick={this.testHandler.bind(null, item._id)}
             onChange={this.testHandler.bind(null, item._id)}
           >
             <div>
               {i + 1}&nbsp;-&nbsp;
             </div>
-            <div>
+            <div style={{ flex: 1 }}>
               {item.info.title} at <strong>{item.companyName}</strong> |{' '}
               {item._id}
             </div>
@@ -86,15 +87,11 @@ class AdminPanel extends Component {
               type="date"
               defaultValue={item.expDate.substr(0, 10)}
             />
-            <button name="edit">Edit</button>
-            <button
-              style={{ cursor: 'inherit' }}
-              name="delete"
-              disabled={this.props.busy}
-            >
+            <Button name="edit">Edit</Button>
+            <Button danger name="delete" disabled={this.props.busy}>
               Delete
-            </button>
-          </div>
+            </Button>
+          </DataLine>
         )}
       </div>
     );

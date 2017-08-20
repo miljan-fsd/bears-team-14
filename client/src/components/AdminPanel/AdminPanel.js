@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button, DataLine } from './style';
+import { Backdrop, Button, CheckBox, DataLine } from './style';
 
 class AdminPanel extends Component {
   constructor(props) {
@@ -9,6 +9,7 @@ class AdminPanel extends Component {
     this.state = {
       data: props.data,
       totalFeatured: props.totalFeatured,
+      busy: props.busy,
     };
   }
 
@@ -47,52 +48,58 @@ class AdminPanel extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.data !== this.state.data) {
+    // if (nextProps.data !== this.state.data) {
+    if (true) {
       this.setState(() => ({
         data: nextProps.data,
         totalFeatured: nextProps.totalFeatured,
+        busy: nextProps.busy,
       }));
     }
   }
 
   render() {
-    const { data, totalFeatured } = this.state;
+    const { busy, data, totalFeatured } = this.state;
+
+    console.log('busy', busy);
+
+    const style = busy ? { cursor: 'wait' } : { cursor: 'auto' };
+
+    console.log('style', style);
 
     return (
-      <div style={this.props.busy ? { cursor: 'wait' } : { cursor: 'default' }}>
+      <div style={style}>
+        {this.props.busy && <Backdrop />}
         <div>
-          Total Items: {data.length} | Total Featured: {totalFeatured}
+          <div>
+            Total Items: {data.length} | Total Featured: {totalFeatured}
+          </div>
+          {data.map((item, i) =>
+            <DataLine
+              key={item._id}
+              onClick={this.testHandler.bind(null, item._id)}
+              onChange={this.testHandler.bind(null, item._id)}
+            >
+              <div>
+                {i + 1}&nbsp;-&nbsp;
+              </div>
+              <div style={{ flex: 1 }}>
+                {item.info.title} at <strong>{item.companyName}</strong> |{' '}
+                {item._id}
+              </div>
+              <CheckBox name="featured" defaultChecked={item.isFeatured} />
+              <input
+                name="date"
+                type="date"
+                defaultValue={item.expDate.substr(0, 10)}
+              />
+              <Button name="edit">Edit</Button>
+              <Button danger name="delete" disabled={this.props.busy}>
+                Delete
+              </Button>
+            </DataLine>
+          )}
         </div>
-        {data.map((item, i) =>
-          <DataLine
-            key={item._id}
-            onClick={this.testHandler.bind(null, item._id)}
-            onChange={this.testHandler.bind(null, item._id)}
-          >
-            <div>
-              {i + 1}&nbsp;-&nbsp;
-            </div>
-            <div style={{ flex: 1 }}>
-              {item.info.title} at <strong>{item.companyName}</strong> |{' '}
-              {item._id}
-            </div>
-            <input
-              style={{ cursor: 'inherit' }}
-              name="featured"
-              type="checkbox"
-              defaultChecked={item.isFeatured}
-            />
-            <input
-              name="date"
-              type="date"
-              defaultValue={item.expDate.substr(0, 10)}
-            />
-            <Button name="edit">Edit</Button>
-            <Button danger name="delete" disabled={this.props.busy}>
-              Delete
-            </Button>
-          </DataLine>
-        )}
       </div>
     );
   }

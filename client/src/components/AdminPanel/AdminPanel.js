@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { TransitionGroup } from 'react-transition-group';
+import FlipMove from 'react-flip-move';
 
-import {
-  Backdrop,
-  Button,
-  CheckBox,
-  DataLine,
-  StyledCSSTransition,
-} from './style';
+import { Backdrop, Button, CheckBox, DataLine } from './style';
 
 class AdminPanel extends Component {
   constructor(props) {
@@ -15,8 +9,9 @@ class AdminPanel extends Component {
 
     this.state = {
       data: props.data,
-      totalFeatured: props.totalFeatured,
+      featured: props.featured,
       busy: props.busy,
+      showAll: true,
     };
   }
 
@@ -26,7 +21,7 @@ class AdminPanel extends Component {
     return new Date(timestamp);
   };
 
-  testHandler = (id, e) => {
+  handleClick = (id, e) => {
     switch (e.target.name) {
       case 'date':
         if (e.type !== 'change') break;
@@ -54,62 +49,65 @@ class AdminPanel extends Component {
     }
   };
 
+  showFeatured = () => {
+    this.setState(s => ({
+      showAll: !s.showAll,
+    }));
+  };
+
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.data !== this.state.data) {
-    if (true) {
-      this.setState(() => ({
-        data: nextProps.data,
-        totalFeatured: nextProps.totalFeatured,
-        busy: nextProps.busy,
-      }));
-    }
+    this.setState(() => ({
+      ...nextProps,
+    }));
   }
 
   render() {
-    const { busy, data, totalFeatured } = this.state;
+    const { busy, data, featured, showAll } = this.state;
 
-    console.log('busy', busy);
-
-    const style = busy ? { cursor: 'wait' } : { cursor: 'auto' };
-
-    console.log('style', style);
+    const arr = showAll ? data : featured;
 
     return (
-      <div style={style}>
-        {this.props.busy && <Backdrop />}
+      <div>
+        {busy && <Backdrop />}
         <div>
           <div>
-            Total Items: {data.length} | Total Featured: {totalFeatured}
+            Total Items: {data.length} | Total Featured: {featured.length}{' '}
+            <Button onClick={this.showFeatured}>
+              {showAll ? 'Show Featured' : 'Show All'}
+            </Button>
           </div>
-          <TransitionGroup>
-            {data.map((item, i) =>
-              <StyledCSSTransition key={item._id}>
-                <DataLine
-                  key={item._id}
-                  onClick={this.testHandler.bind(null, item._id)}
-                  onChange={this.testHandler.bind(null, item._id)}
-                >
-                  <div>
-                    {i + 1}&nbsp;-&nbsp;
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    {item.info.title} at <strong>{item.companyName}</strong> |{' '}
-                    {item._id}
-                  </div>
-                  <CheckBox name="featured" defaultChecked={item.isFeatured} />
-                  <input
-                    name="date"
-                    type="date"
-                    defaultValue={item.expDate.substr(0, 10)}
-                  />
-                  <Button name="edit">Edit</Button>
-                  <Button danger name="delete" disabled={this.props.busy}>
-                    Delete
-                  </Button>
-                </DataLine>
-              </StyledCSSTransition>
+          <FlipMove
+            duration={350}
+            easing="ease-out"
+            leaveAnimation="accordionVertical"
+            enterAnimation="accordionVertical"
+          >
+            {arr.map((item, i) =>
+              <DataLine
+                key={item._id}
+                onClick={this.handleClick.bind(null, item._id)}
+                onChange={this.handleClick.bind(null, item._id)}
+              >
+                <div>
+                  {i + 1}&nbsp;-&nbsp;
+                </div>
+                <div style={{ flex: 1 }}>
+                  {item.info.title} at <strong>{item.companyName}</strong> |{' '}
+                  {item._id}
+                </div>
+                <CheckBox name="featured" defaultChecked={item.isFeatured} />
+                <input
+                  name="date"
+                  type="date"
+                  defaultValue={item.expDate.substr(0, 10)}
+                />
+                <Button name="edit">Edit</Button>
+                <Button danger name="delete">
+                  Delete
+                </Button>
+              </DataLine>
             )}
-          </TransitionGroup>
+          </FlipMove>
         </div>
       </div>
     );

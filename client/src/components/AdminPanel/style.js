@@ -1,44 +1,22 @@
 import styled from 'styled-components';
-import { CSSTransition } from 'react-transition-group';
-
-const animationTimeout = {
-  enter: 0,
-  exit: 250,
-};
-
-export const StyledCSSTransition = styled(CSSTransition).attrs({
-  classNames: 'fade',
-  timeout: animationTimeout,
-})`
-  &.fade-exit {
-    height: 56px;
-    margin-top: 5px;
-    opacity: 0.9;
-    transition: all ${animationTimeout.exit}ms ease-in;
-  }
-
-  &.fade-exit.fade-exit-active {
-    height: 0;
-    margin-top: -5px;
-    opacity: 0;
-  }
-`;
 
 export const DataLine = styled.div`
   align-items: center;
   background-color: #eee;
   display: flex;
   flex-direction: row;
+  height: 56px;
   justify-content: space-between;
   margin: auto;
   margin-top: 5px;
   max-width: 1170px;
+  opacity: 1;
   padding: 5px;
   width: 100%;
 `;
 
 export const Backdrop = styled.div`
-  background-color: rgba(0, 0, 0, 0.08);
+  background-color: rgba(0, 0, 0, 0.1);
   cursor: wait;
   height: 100vh;
   left: 0;

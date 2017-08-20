@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import FlipMove from 'react-flip-move';
+
+import { Backdrop, Button, CheckBox, DataLine } from './style';
 
 class AdminPanel extends Component {
   constructor(props) {
@@ -6,7 +9,9 @@ class AdminPanel extends Component {
 
     this.state = {
       data: props.data,
-      totalFeatured: props.totalFeatured,
+      featured: props.featured,
+      busy: props.busy,
+      showAll: true,
     };
   }
 
@@ -16,11 +21,11 @@ class AdminPanel extends Component {
     return new Date(timestamp);
   };
 
-  testHandler = (id, e) => {
+  handleClick = (id, e) => {
     switch (e.target.name) {
       case 'date':
         if (e.type !== 'change') break;
-        console.log('date clicked', e.type);
+        this.updateDate(id, e.target.value);
         break;
       case 'featured':
         if (e.type !== 'change') break;
@@ -35,67 +40,75 @@ class AdminPanel extends Component {
       default:
         return;
     }
-    // if (e.target.name === 'date' && e.type === 'change') {
-    //   // console.log('date changed');
-    //   const validDate = this.checkDate(e.target.value);
-    //   if (validDate) {
-    //     console.log('Date valid, updating record...', validDate);
-    //   }
-    // }
+  };
+
+  updateDate = (id, date) => {
+    const validDate = this.checkDate(date);
+    if (validDate) {
+      this.props.updateItem(id, { expDate: validDate });
+    }
+  };
+
+  showFeatured = () => {
+    this.setState(s => ({
+      showAll: !s.showAll,
+    }));
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.data !== this.state.data) {
-      this.setState(() => ({
-        data: nextProps.data,
-        totalFeatured: nextProps.totalFeatured,
-      }));
-    }
+    this.setState(() => ({
+      ...nextProps,
+    }));
   }
 
   render() {
-    const { data, totalFeatured } = this.state;
+    const { busy, data, featured, showAll } = this.state;
+
+    const arr = showAll ? data : featured;
 
     return (
-      <div style={this.props.busy ? { cursor: 'wait' } : { cursor: 'default' }}>
+      <div>
+        {busy && <Backdrop />}
         <div>
-          Total Items: {data.length} | Total Featured: {totalFeatured}
-        </div>
-        {data.map((item, i) =>
-          <div
-            key={item._id}
-            style={{ display: 'flex' }}
-            onClick={this.testHandler.bind(null, item._id)}
-            onChange={this.testHandler.bind(null, item._id)}
-          >
-            <div>
-              {i + 1}&nbsp;-&nbsp;
-            </div>
-            <div>
-              {item.info.title} at <strong>{item.companyName}</strong> |{' '}
-              {item._id}
-            </div>
-            <input
-              style={{ cursor: 'inherit' }}
-              name="featured"
-              type="checkbox"
-              defaultChecked={item.isFeatured}
-            />
-            <input
-              name="date"
-              type="date"
-              defaultValue={item.expDate.substr(0, 10)}
-            />
-            <button name="edit">Edit</button>
-            <button
-              style={{ cursor: 'inherit' }}
-              name="delete"
-              disabled={this.props.busy}
-            >
-              Delete
-            </button>
+          <div>
+            Total Items: {data.length} | Total Featured: {featured.length}{' '}
+            <Button onClick={this.showFeatured}>
+              {showAll ? 'Show Featured' : 'Show All'}
+            </Button>
           </div>
-        )}
+          <FlipMove
+            duration={350}
+            easing="ease-out"
+            leaveAnimation="accordionVertical"
+            enterAnimation="accordionVertical"
+          >
+            {arr.map((item, i) =>
+              <DataLine
+                key={item._id}
+                onClick={this.handleClick.bind(null, item._id)}
+                onChange={this.handleClick.bind(null, item._id)}
+              >
+                <div>
+                  {i + 1}&nbsp;-&nbsp;
+                </div>
+                <div style={{ flex: 1 }}>
+                  {item.info.title} at <strong>{item.companyName}</strong> |{' '}
+                  {item._id}
+                </div>
+                <CheckBox name="featured" defaultChecked={item.isFeatured} />
+                <input
+                  name="date"
+                  type="date"
+                  defaultValue={item.expDate.substr(0, 10)}
+                />
+                <Button name="edit">Edit</Button>
+                <Button danger name="delete">
+                  Delete
+                </Button>
+              </DataLine>
+            )}
+          </FlipMove>
+        </div>
       </div>
     );
   }

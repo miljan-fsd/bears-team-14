@@ -29,9 +29,9 @@ class Main extends React.Component {
             <AdminPanel
               {...props}
               {...rest}
+              featured={featured}
               data={data}
               total={data.length}
-              totalFeatured={featured.length}
             />}
         />
         <Route path="/job/:id" component={ItemDetails} />

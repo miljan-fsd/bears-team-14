@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
+import { TransitionGroup } from 'react-transition-group';
 
-import { Backdrop, Button, CheckBox, DataLine } from './style';
+import {
+  Backdrop,
+  Button,
+  CheckBox,
+  DataLine,
+  StyledCSSTransition,
+} from './style';
 
 class AdminPanel extends Component {
   constructor(props) {
@@ -74,31 +81,35 @@ class AdminPanel extends Component {
           <div>
             Total Items: {data.length} | Total Featured: {totalFeatured}
           </div>
-          {data.map((item, i) =>
-            <DataLine
-              key={item._id}
-              onClick={this.testHandler.bind(null, item._id)}
-              onChange={this.testHandler.bind(null, item._id)}
-            >
-              <div>
-                {i + 1}&nbsp;-&nbsp;
-              </div>
-              <div style={{ flex: 1 }}>
-                {item.info.title} at <strong>{item.companyName}</strong> |{' '}
-                {item._id}
-              </div>
-              <CheckBox name="featured" defaultChecked={item.isFeatured} />
-              <input
-                name="date"
-                type="date"
-                defaultValue={item.expDate.substr(0, 10)}
-              />
-              <Button name="edit">Edit</Button>
-              <Button danger name="delete" disabled={this.props.busy}>
-                Delete
-              </Button>
-            </DataLine>
-          )}
+          <TransitionGroup>
+            {data.map((item, i) =>
+              <StyledCSSTransition key={item._id}>
+                <DataLine
+                  key={item._id}
+                  onClick={this.testHandler.bind(null, item._id)}
+                  onChange={this.testHandler.bind(null, item._id)}
+                >
+                  <div>
+                    {i + 1}&nbsp;-&nbsp;
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    {item.info.title} at <strong>{item.companyName}</strong> |{' '}
+                    {item._id}
+                  </div>
+                  <CheckBox name="featured" defaultChecked={item.isFeatured} />
+                  <input
+                    name="date"
+                    type="date"
+                    defaultValue={item.expDate.substr(0, 10)}
+                  />
+                  <Button name="edit">Edit</Button>
+                  <Button danger name="delete" disabled={this.props.busy}>
+                    Delete
+                  </Button>
+                </DataLine>
+              </StyledCSSTransition>
+            )}
+          </TransitionGroup>
         </div>
       </div>
     );

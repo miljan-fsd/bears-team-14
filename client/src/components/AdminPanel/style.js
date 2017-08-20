@@ -1,4 +1,28 @@
 import styled from 'styled-components';
+import { CSSTransition } from 'react-transition-group';
+
+const animationTimeout = {
+  enter: 0,
+  exit: 250,
+};
+
+export const StyledCSSTransition = styled(CSSTransition).attrs({
+  classNames: 'fade',
+  timeout: animationTimeout,
+})`
+  &.fade-exit {
+    height: 56px;
+    margin-top: 5px;
+    opacity: 0.9;
+    transition: all ${animationTimeout.exit}ms ease-in;
+  }
+
+  &.fade-exit.fade-exit-active {
+    height: 0;
+    margin-top: -5px;
+    opacity: 0;
+  }
+`;
 
 export const DataLine = styled.div`
   align-items: center;

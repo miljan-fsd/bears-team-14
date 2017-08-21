@@ -1,7 +1,26 @@
 import React, { Component } from 'react';
-import FlipMove from 'react-flip-move';
 
-import { Backdrop, Button, CheckBox, DataLine } from './style';
+import {
+  Backdrop,
+  Button,
+  CheckBox,
+  FaButton,
+  CompanyName,
+  Controls,
+  DataLine,
+  FlipWithStyle,
+  PositionDescription,
+  TableHeader,
+  TableWrapper,
+  Wrapper,
+} from './style';
+
+const flipMoveOptions = {
+  duration: 350,
+  easing: 'ease-out',
+  leaveAnimation: 'accordionVertical',
+  enterAnimation: 'accordionVertical',
+};
 
 class AdminPanel extends Component {
   constructor(props) {
@@ -13,6 +32,10 @@ class AdminPanel extends Component {
       busy: props.busy,
       showAll: true,
     };
+  }
+
+  componentDidMount() {
+    window.scrollTo(0, 0);
   }
 
   checkDate = str => {
@@ -61,27 +84,38 @@ class AdminPanel extends Component {
     }));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    // If filter switched scroll to top.
+    if (prevState.showAll !== this.state.showAll) {
+      window.scrollTo(0, 0);
+    }
+  }
+
   render() {
     const { busy, data, featured, showAll } = this.state;
 
     const arr = showAll ? data : featured;
 
     return (
-      <div>
+      <Wrapper>
         {busy && <Backdrop />}
-        <div>
+        <Controls>
           <div>
             Total Items: {data.length} | Total Featured: {featured.length}{' '}
-            <Button onClick={this.showFeatured}>
-              {showAll ? 'Show Featured' : 'Show All'}
-            </Button>
           </div>
-          <FlipMove
-            duration={350}
-            easing="ease-out"
-            leaveAnimation="accordionVertical"
-            enterAnimation="accordionVertical"
-          >
+          <Button onClick={this.showFeatured}>
+            {showAll ? 'Show Featured' : 'Show All'}
+          </Button>
+        </Controls>
+        <TableWrapper>
+          <TableHeader>
+            <div>Nr</div>
+            <div>Company</div>
+            <div>Position</div>
+            <div>Featured</div>
+            <div>Expiry Date</div>
+          </TableHeader>
+          <FlipWithStyle {...flipMoveOptions}>
             {arr.map((item, i) =>
               <DataLine
                 key={item._id}
@@ -89,27 +123,35 @@ class AdminPanel extends Component {
                 onChange={this.handleClick.bind(null, item._id)}
               >
                 <div>
-                  {i + 1}&nbsp;-&nbsp;
+                  {i + 1}.&nbsp;
                 </div>
-                <div style={{ flex: 1 }}>
-                  {item.info.title} at <strong>{item.companyName}</strong> |{' '}
-                  {item._id}
-                </div>
-                <CheckBox name="featured" defaultChecked={item.isFeatured} />
+                <CompanyName>
+                  {item.companyName}
+                </CompanyName>
+                <PositionDescription>
+                  {item.info.title}
+                </PositionDescription>
+                <CheckBox
+                  name="featured"
+                  defaultChecked={item.isFeatured}
+                  title={item.isFeatured ? 'Featured' : 'Not featured'}
+                />
                 <input
                   name="date"
                   type="date"
                   defaultValue={item.expDate.substr(0, 10)}
                 />
-                <Button name="edit">Edit</Button>
-                <Button danger name="delete">
-                  Delete
-                </Button>
+                <FaButton name="edit" title="Edit" disabled>
+                  <i className="fa fa-pencil-square-o" aria-hidden="true" />
+                </FaButton>
+                <FaButton name="delete" title="Delete" danger>
+                  <i className="fa fa-trash-o" aria-hidden="true" />
+                </FaButton>
               </DataLine>
             )}
-          </FlipMove>
-        </div>
-      </div>
+          </FlipWithStyle>
+        </TableWrapper>
+      </Wrapper>
     );
   }
 }

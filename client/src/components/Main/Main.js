@@ -34,7 +34,10 @@ class Main extends React.Component {
               total={data.length}
             />}
         />
-        <Route path="/job/:id" component={ItemDetails} />
+        <Route
+          path="/job/:id"
+          render={props => <ItemDetails {...props} data={data} />}
+        />
         <Route path="/jobs" render={props => <Jobs {...props} data={data} />} />
         <Route path="/login" component={Login} />
         <Route path="/join" component={Join} />

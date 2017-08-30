@@ -5,6 +5,23 @@
 ## Jobbatical clone!
 
 ---
+
+## Demo
+
+Clone the repo and run
+```
+yarn run setup
+```
+and after that
+```
+yarn run client:only
+```
+This will run server with some sample data, no database required.  
+All changes will be lost after server restart.  
+Go to `localhost:3000/admin` to get to the Admin Panel.  
+P.S. Images are hotlinked ;)
+
+---
 ## Development
 
 After cloning the repo install both server and client packages with

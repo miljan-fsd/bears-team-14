@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Jobs extends Component {
-  render() {
-    return <div>Jobs</div>;
-  }
-}
+import FeaturedItems from '../FeaturedItems';
+
+const Jobs = ({ data, ...props }) => <FeaturedItems data={data} {...props} />;
 
 export default Jobs;

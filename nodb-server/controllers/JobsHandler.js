@@ -1,66 +1,20 @@
 const JobsHelper = require('./JobsHelper.js');
-const Job = require('../models/Job.js');
+const jobs = require('../jobs.js').jobs;
+
+const delay = () => Math.random() * 100 + 100;
 
 module.exports = {
   getAll: async function(req, res) {
-    let jobs = await Job.find();
-
-    if (!jobs) throw 'No jobs found!';
-
-    res.status(200).json(jobs);
+    setTimeout(() => {
+      res.status(200).json(jobs);
+    }, delay());
   },
-  createNew: async function(req, res) {
-    // Remember the form's data
-    const {
-      companyName,
-      title,
-      description,
-      imgUrl,
-      website,
-      location,
-      expDate,
-    } = req.body;
 
-    // Change the form's data as needed
-    const tags = JobsHelper.cleanTags(req.body.tags);
-
-    // Create and save the new job as specified by mongoose model
-    const cleanedJob = new Job({
-      companyName,
-      info: {
-        title,
-        description,
-        imgUrl,
-        website,
-      },
-      location,
-      tags,
-      expDate: new Date(expDate),
-    });
-
-    await cleanedJob.save();
-
-    res.status(201).json({
-      SUCCESS: cleanedJob,
-    });
-  },
-  /*
-    Returns one job as specified by a parameter.
-    Parameters: job id.
-  */
-  getOne: async function(req, res) {
-    let job = await Job.findById(req.params.jobId);
-
-    if (!job) throw 'No job found!';
-
-    res.status(200).json(job);
-  },
   /*
     Updates a job with any fields that have been sent as a request body.
     Parameters: job id.
   */
   updateJob: async function(req, res) {
-    // Remember the request's data
     const {
       companyName,
       title,
@@ -78,9 +32,9 @@ module.exports = {
     const isFeatured = String(req.body.isFeatured);
 
     // Find the job by an id that was passed in
-    let job = await Job.findById(req.params.jobId);
+    const job = jobs.filter(job => job._id == req.params.jobId)[0];
 
-    if (!job) throw 'No job has been found!';
+    if (!job) return res.status(404).json({ error: 'Not found' });
 
     // Update the job
     job.companyName = companyName || job.companyName;
@@ -96,26 +50,38 @@ module.exports = {
       : job.isFeatured;
     job.expDate = expDate ? new Date(expDate) : job.expDate;
 
-    // Save the job
-    await job.save();
-
-    res.status(200).json({
-      UPDATED: job,
-    });
+    setTimeout(() => {
+      res.status(200).json({
+        UPDATED: job,
+      });
+    }, delay());
   },
+
   /*
     Deletes a job.
     Parameters: job id.
   */
   deleteJob: async function(req, res) {
     const jobId = req.params.jobId;
-    let job = await Job.findByIdAndRemove(jobId);
-
-    res.status(200).json({
-      REMOVED: {
-        name: job.info.title,
-        _id: jobId,
-      },
+    let id;
+    jobs.some((job, i) => {
+      if (job._id == jobId) {
+        id = i;
+        return true;
+      }
     });
+
+    const job = jobs[id];
+
+    jobs.splice(id, 1);
+
+    setTimeout(() => {
+      res.status(200).json({
+        REMOVED: {
+          name: job.info.title,
+          _id: jobId,
+        },
+      });
+    }, delay());
   },
 };

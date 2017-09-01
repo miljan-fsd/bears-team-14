@@ -16,7 +16,7 @@ import {
 
 const findItem = (id, data) => data.filter(item => item._id === id)[0];
 
-const ItemDetails = withScrollToTop(props => {
+const ItemDetails = props => {
   const id = props.history.location.pathname.split('/').pop();
   const data = findItem(id, props.data);
 
@@ -77,10 +77,10 @@ const ItemDetails = withScrollToTop(props => {
       </ListingBlock>
     </Wrapper>
   );
-});
+};
 
 ItemDetails.propTypes = {};
 
 ItemDetails.defaultProps = {};
 
-export default ItemDetails;
+export default withScrollToTop(ItemDetails);

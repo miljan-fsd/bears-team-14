@@ -67,6 +67,7 @@ export const JobInfoSocial = styled.div`
   }
 
   & > span > i {
+    cursor: not-allowed;
     font-size: 40px;
     line-height: 40px;
     margin: 0 2px;

@@ -68,6 +68,14 @@ class App extends Component {
     }
   };
 
+  applyToJob = id => {
+    console.log('App.js - Applying to', id);
+  };
+
+  saveJob = id => {
+    console.log('App.js - Save', id);
+  };
+
   render() {
     return (
       <Router>
@@ -77,6 +85,8 @@ class App extends Component {
             {...this.state}
             deleteItem={this.deleteItem}
             updateItem={this.updateItem}
+            handleApply={this.applyToJob}
+            handleSave={this.saveJob}
           />
           <Footer />
         </div>

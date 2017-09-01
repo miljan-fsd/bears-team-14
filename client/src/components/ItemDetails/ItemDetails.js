@@ -2,115 +2,107 @@ import React from 'react';
 import marked from 'marked';
 // import PropTypes from 'prop-types';
 
-import './style.css';
-
 import { withScrollToTop } from '../hocs/withScrollToTop';
-import dummyData from './dummyData';
+import { getRemainingTime } from '../../helpers';
 
-function formatDate(unix) {
-  const days = ~~((unix - Date.now()) / 86400000);
-  return days;
-}
+import {
+  HeroImage,
+  JobInfoSocial,
+  JobTimeInfo,
+  ListingBlock,
+  RoundedButton,
+  SideMenuButton,
+  StickyNavbar,
+  Title,
+  Wrapper,
+} from './style.js';
 
-const ItemDetails = withScrollToTop(props => {
-  const data = dummyData[0];
+const findItem = (id, data) => data.filter(item => item._id === id)[0];
+
+const ItemDetails = props => {
+  const id = props.history.location.pathname.split('/').pop();
+  const data = findItem(id, props.data);
+
+  if (!data) return <div>Loading...</div>;
+
+  const handleApply = () => {
+    props.handleApply(data._id);
+  };
+
+  const handleSave = () => {
+    props.handleSave(data._id);
+  };
 
   return (
-    <div
-      style={{ backgroundImage: `url(${data.info.imgUrl})` }}
-      className="item-details section"
-    >
-      <div className="item-details__description">
-        <div className="section">
-          <p className="title">
-            {data.info.title} - Job Id: {props.match.params.id}
-          </p>
-          <div className="level">
-            <div className="level-left">
-              <p className="level-item">
-                <strong>{formatDate(data.expDate)} days left</strong>&nbsp;to
-                apply
-              </p>
-            </div>
-            <div className="level-right">
-              <span className="level-item">
-                <span>Save for later&nbsp;</span>
-                <button className="button is-success is-outlined">
-                  &para;
-                </button>
-              </span>
-              <div className="level-item">
-                <button className="button is-success">APPLY NOW</button>
-              </div>
-            </div>
+    <Wrapper>
+      <HeroImage imgUrl={data.info.imgUrl} />
+      {/* <HeroImage imgUrl={'/placeholder-image.jpg'} /> */}
+      <Title>
+        <h1>{data.info.title}</h1>
+      </Title>
+      <JobTimeInfo>
+        <p>
+          <strong>{getRemainingTime(data.expDate)} left</strong> to apply
+        </p>
+        <p>Position available immediately</p>
+      </JobTimeInfo>
+      <JobInfoSocial>
+        Know someone who would be perfect for this job? Share the link:
+        <span>
+          <i className="fa fa-linkedin" aria-hidden="true" />
+          <i className="fa fa-facebook" aria-hidden="true" />
+          <i className="fa fa-twitter" aria-hidden="true" />
+        </span>
+      </JobInfoSocial>
+      <ListingBlock summary>
+        {data.companyName}
+        <br />
+        {data.location}
+      </ListingBlock>
+      <ListingBlock>
+        {data.tags.map((tag, i) => (
+          <span key={i} className="tag is-large">
+            {tag}
+          </span>
+        ))}
+      </ListingBlock>
+      {Object.keys(JSON.parse(data.info.description)).map((key, i) => (
+        <ListingBlock className="section" key={i}>
+          <div className="content">
+            <h3>{key}</h3>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: marked(JSON.parse(data.info.description)[key]),
+              }}
+            />
           </div>
-        </div>
-        <div className="section">
-          <div className="tags">
-            {data.tags.map((tag, i) =>
-              <span key={i} className="tag is-large">
-                {tag}
-              </span>
-            )}
-          </div>
-        </div>
-        <p className="item-details__subtitle subtitle">JOB DESCRIPTION</p>
-        {Object.keys(data.info.description).map((key, i) =>
-          <div className="section" key={i}>
-            <div className="content">
-              <p
-                className="subtitle is-5"
-                style={{ textTransform: 'capitalize' }}
-              >
-                {key}
-              </p>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: marked(data.info.description[key]),
-                }}
-              />
-            </div>
-          </div>
-        )}
-        <p className="item-details__subtitle subtitle">THE COMPANY</p>
-        <div className="section">
-          <p className="title is-4">
-            About {data.companyName}
-          </p>
-          <p className="subtitle is-5">
-            in {data.location}
-          </p>
-          <p className="">
-            Website:{' '}
-            <a
-              href={`https://${data.info.website}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {data.info.website}
-            </a>
-            <br />
-            Social:{' '}
-            {data.info.social.map((soc, i) =>
-              <span key={i}>
-                <a
-                  href={`https://${soc}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {soc.split('.')[0]}
-                </a>&nbsp;
-              </span>
-            )}
-          </p>
-        </div>
-      </div>
-    </div>
+        </ListingBlock>
+      ))}
+      THE COMPANY
+      <ListingBlock>
+        About {data.companyName}
+        <br />
+        {data.location}
+        <br />
+        Website: <a href={data.info.website}>{data.info.website}</a>
+      </ListingBlock>
+      <StickyNavbar>
+        <RoundedButton first onClick={handleApply}>
+          Apply now
+        </RoundedButton>
+        <RoundedButton empty onClick={handleSave}>
+          Save <i className="fa fa-bookmark" aria-hidden="true" />
+        </RoundedButton>
+        <SideMenuButton>
+          <i className="fa fa-bars" aria-hidden="true" />
+        </SideMenuButton>
+      </StickyNavbar>
+    </Wrapper>
   );
-});
+};
 
 ItemDetails.propTypes = {};
 
 ItemDetails.defaultProps = {};
 
-export default ItemDetails;
+export default withScrollToTop(ItemDetails);

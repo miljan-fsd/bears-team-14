@@ -20,23 +20,25 @@ class Main extends React.Component {
         <Route
           exact
           path="/"
-          render={props =>
-            <Home {...props} data={featured} total={data.length} />}
+          render={props => (
+            <Home {...props} data={featured} total={data.length} />
+          )}
         />
         <Route
           path="/admin"
-          render={props =>
+          render={props => (
             <AdminPanel
               {...props}
               {...rest}
               featured={featured}
               data={data}
               total={data.length}
-            />}
+            />
+          )}
         />
         <Route
           path="/job/:id"
-          render={props => <ItemDetails {...props} data={data} />}
+          render={props => <ItemDetails {...props} {...rest} data={data} />}
         />
         <Route path="/jobs" render={props => <Jobs {...props} data={data} />} />
         <Route path="/login" component={Login} />

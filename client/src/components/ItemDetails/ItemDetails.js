@@ -25,6 +25,14 @@ const ItemDetails = props => {
 
   if (!data) return <div>Loading...</div>;
 
+  const handleApply = () => {
+    props.handleApply(data._id);
+  };
+
+  const handleSave = () => {
+    props.handleSave(data._id);
+  };
+
   return (
     <Wrapper>
       <HeroImage imgUrl={data.info.imgUrl} />
@@ -79,8 +87,10 @@ const ItemDetails = props => {
         Website: <a href={data.info.website}>{data.info.website}</a>
       </ListingBlock>
       <StickyNavbar>
-        <RoundedButton first>Apply now</RoundedButton>
-        <RoundedButton empty>
+        <RoundedButton first onClick={handleApply}>
+          Apply now
+        </RoundedButton>
+        <RoundedButton empty onClick={handleSave}>
           Save <i className="fa fa-bookmark" aria-hidden="true" />
         </RoundedButton>
         <SideMenuButton>

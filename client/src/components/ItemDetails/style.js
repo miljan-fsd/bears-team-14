@@ -81,6 +81,13 @@ export const ListingBlock = styled.div`
   font-family: Roboto, sans-serif;
   margin-bottom: 10px;
   padding: ${props => (props.summary ? `20px 16px` : `10px 10px 5px 10px`)};
+  & h3 {
+    color: #333;
+    font-family: Raleway, 'Open Sans', Helvetica, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
 `;
 
 export const StickyNavbar = styled.div`

@@ -69,7 +69,7 @@ const ItemDetails = props => {
       {Object.keys(JSON.parse(data.info.description)).map((key, i) => (
         <ListingBlock className="section" key={i}>
           <div className="content">
-            <p>{key}</p>
+            <h3>{key}</h3>
             <p
               dangerouslySetInnerHTML={{
                 __html: marked(JSON.parse(data.info.description)[key]),

@@ -10,6 +10,9 @@ import {
   JobInfoSocial,
   JobTimeInfo,
   ListingBlock,
+  RoundedButton,
+  SideMenuButton,
+  StickyNavbar,
   Title,
   Wrapper,
 } from './style.js';
@@ -75,6 +78,15 @@ const ItemDetails = props => {
         <br />
         Website: <a href={data.info.website}>{data.info.website}</a>
       </ListingBlock>
+      <StickyNavbar>
+        <RoundedButton first>Apply now</RoundedButton>
+        <RoundedButton empty>
+          Save <i className="fa fa-bookmark" aria-hidden="true" />
+        </RoundedButton>
+        <SideMenuButton>
+          <i className="fa fa-bars" aria-hidden="true" />
+        </SideMenuButton>
+      </StickyNavbar>
     </Wrapper>
   );
 };

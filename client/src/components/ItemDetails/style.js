@@ -82,3 +82,68 @@ export const ListingBlock = styled.div`
   margin-bottom: 10px;
   padding: ${props => (props.summary ? `20px 16px` : `10px 10px 5px 10px`)};
 `;
+
+export const StickyNavbar = styled.div`
+  align-items: center;
+  background-color: transparent;
+  border: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  font-size: 13px;
+  height: 90px;
+  padding: 24px 16px;
+  position: fixed;
+  width: 100%;
+`;
+
+export const RoundedButton = styled.button`
+  background-color: ${props => (props.empty ? '#fff' : '#04d092')};
+  border: 1px solid #04d092;
+  border-radius: 40px;
+  box-sizing: border-box;
+  color: ${props => (props.empty ? '#04d092' : '#fff')};
+  cursor: pointer;
+  height: 48px;
+  line-height: 18px;
+  margin-left: ${props => (props.first ? 0 : '12px')};
+  outline-color: transparent;
+  padding: 14px 20px;
+  text-transform: uppercase;
+  transition: all 0.2s linear;
+
+  & > .fa {
+    font-size: 20px;
+  }
+
+  &:hover {
+    background-color: #26b999;
+    border: 1px solid #26b999;
+    color: #fff;
+  }
+`;
+
+export const SideMenuButton = styled.button`
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 1px 6px rgba(8, 57, 96, 0.06), 0 2px 32px rgba(8, 57, 96, 0.16);
+  color: #04d092;
+  height: 56px;
+  outline-color: transparent;
+  position: absolute;
+  right: 20px;
+  transition: all 0.4s ease;
+  width: 56px;
+
+  & > .fa {
+    font-size: 24px;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(8, 57, 96, 0.09),
+      0 4px 40px rgba(8, 57, 96, 0.24);
+  }
+`;

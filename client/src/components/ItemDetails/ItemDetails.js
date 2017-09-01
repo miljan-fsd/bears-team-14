@@ -42,9 +42,9 @@ const ItemDetails = props => {
       </Title>
       <JobTimeInfo>
         <p>
-          <strong>{getRemainingTime(data.expDate)} days left</strong> to apply
+          <strong>{getRemainingTime(data.expDate)} left</strong> to apply
         </p>
-        <p>*^*Position available immediately</p>
+        <p>Position available immediately</p>
       </JobTimeInfo>
       <JobInfoSocial>
         Know someone who would be perfect for this job? Share the link:

@@ -80,7 +80,8 @@ export const ListingBlock = styled.div`
   border-radius: 5px;
   font-family: Roboto, sans-serif;
   margin-bottom: 10px;
-  padding: ${props => (props.summary ? `20px 16px` : `10px 10px 5px 10px`)};
+  padding: 20px 16px;
+
   & h3 {
     color: #333;
     font-family: Raleway, 'Open Sans', Helvetica, sans-serif;

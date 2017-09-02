@@ -4,6 +4,7 @@ import { breakSmall } from './../../common-styles/layout';
 // const mainColor = `rgb(28, 117, 188);`;
 
 export const Wrapper = styled.div`
+  background-color: #fff;
   border: 1px solid rgb(238, 238, 238);
   border-radius: 5px;
   box-shadow: 0;

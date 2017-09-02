@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import FeaturedItems from '../FeaturedItems';
 import Search from '../Search';
 
+import { Header } from './styled';
+
 const lowercaseArray = arr => arr.map(item => item.toLowerCase());
 
 class Jobs extends Component {
@@ -54,6 +56,7 @@ class Jobs extends Component {
     const { data, ...props } = this.props;
     return (
       <div>
+        <Header>Explore jobs</Header>
         <Search handleFilter={this.filterItems} />
         <FeaturedItems data={filteredData} {...props} />
       </div>

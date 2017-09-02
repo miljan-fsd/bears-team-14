@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { TransitionGroup } from 'react-transition-group';
 
 import FeaturedItems from '../FeaturedItems';
 import Search from '../Search';
-
 import { Header, SearchStatus, StyledCSSTransition } from './styled';
 
 import filterData from '../../helpers/filterData';

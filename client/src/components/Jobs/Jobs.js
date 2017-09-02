@@ -6,7 +6,7 @@ import Search from '../Search';
 
 import { Header, SearchStatus, StyledCSSTransition } from './styled';
 
-import lowercaseArray from '../../helpers/lowercaseArray';
+import filterData from '../../helpers/filterData';
 
 class Jobs extends Component {
   constructor(props) {
@@ -40,14 +40,7 @@ class Jobs extends Component {
         showFoundCount: false,
       }));
 
-    const filteredData = data.filter(
-      item =>
-        (item.info &&
-          item.info.title &&
-          item.info.title.toLowerCase().includes(key)) ||
-        (item.tags && lowercaseArray(item.tags).includes(key)) ||
-        (item.location && item.location.toLowerCase().includes(key))
-    );
+    const filteredData = filterData(data, key);
 
     this.setState(() => ({
       filteredData,

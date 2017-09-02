@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  font-family: "Open Sans", Helvetica, sans-serif;
+  font-family: 'Open Sans', Helvetica, sans-serif;
   height: 400px;
   margin-bottom: 20px;
   max-width: 740px;

@@ -6,7 +6,7 @@ import Search from '../Search';
 
 import { Header, SearchStatus, StyledCSSTransition } from './styled';
 
-const lowercaseArray = arr => arr.map(item => item.toLowerCase());
+import lowercaseArray from '../../helpers/lowercaseArray';
 
 class Jobs extends Component {
   constructor(props) {

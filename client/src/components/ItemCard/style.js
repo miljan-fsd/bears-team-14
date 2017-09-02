@@ -4,6 +4,7 @@ import { breakSmall } from './../../common-styles/layout';
 // const mainColor = `rgb(28, 117, 188);`;
 
 export const Wrapper = styled.div`
+  background-color: #fff;
   border: 1px solid rgb(238, 238, 238);
   border-radius: 5px;
   box-shadow: 0;
@@ -11,7 +12,7 @@ export const Wrapper = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  font-family: "Open Sans", Helvetica, sans-serif;
+  font-family: 'Open Sans', Helvetica, sans-serif;
   height: 400px;
   margin-bottom: 20px;
   max-width: 740px;

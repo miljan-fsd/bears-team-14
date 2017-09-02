@@ -7,7 +7,7 @@ const Search = props => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('Searching for', searchInput.value);
+    props.handleFilter(searchInput.value.toLowerCase());
   };
 
   return (

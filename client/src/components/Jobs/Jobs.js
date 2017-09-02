@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import FeaturedItems from '../FeaturedItems';
 import Search from '../Search';
 
-import { Header } from './styled';
+import { Header, SearchStatus, StyledCSSTransition } from './styled';
 
 const lowercaseArray = arr => arr.map(item => item.toLowerCase());
 
@@ -14,6 +15,7 @@ class Jobs extends Component {
     this.state = {
       data: props.data,
       filteredData: props.data,
+      showFoundCount: false,
     };
   }
 
@@ -35,6 +37,7 @@ class Jobs extends Component {
     if (!key.length)
       return this.setState(() => ({
         filteredData: data,
+        showFoundCount: false,
       }));
 
     const filteredData = data.filter(
@@ -48,16 +51,28 @@ class Jobs extends Component {
 
     this.setState(() => ({
       filteredData,
+      showFoundCount: true,
+      searchKey: key,
     }));
   };
 
   render() {
-    const { filteredData } = this.state;
+    const { filteredData, searchKey, showFoundCount } = this.state;
     const { data, ...props } = this.props;
     return (
       <div>
         <Header>Explore jobs</Header>
         <Search handleFilter={this.filterItems} />
+        <TransitionGroup>
+          {showFoundCount && (
+            <StyledCSSTransition>
+              <SearchStatus>
+                Found {filteredData.length} matches for{' '}
+                <strong>"{searchKey}"</strong>
+              </SearchStatus>
+            </StyledCSSTransition>
+          )}
+        </TransitionGroup>
         <FeaturedItems data={filteredData} {...props} />
       </div>
     );

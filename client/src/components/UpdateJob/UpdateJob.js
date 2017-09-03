@@ -2,7 +2,34 @@ import React, { Component } from 'react';
 
 import { Fieldset, Form, Wrapper } from './styled';
 
+const findItem = (id, data) => data.filter(item => item._id === id)[0];
+
 class UpdateJob extends Component {
+  constructor(props) {
+    super(props);
+
+    const id = props.editMode
+      ? props.history.location.pathname.split('/').pop()
+      : null;
+
+    this.state = {
+      editMode: props.editMode,
+      id,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.editMode) return;
+
+    const data = findItem(this.state.id, nextProps.data);
+
+    if (data) {
+      this.setState(() => ({
+        data,
+      }));
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
 
@@ -26,12 +53,29 @@ class UpdateJob extends Component {
 
     if (!data.imgUrl) data.imgUrl = '/placeholder-image.jpg';
 
+    this.state.editMode
+      ? this.saveJob(this.state.id, data)
+      : this.createNewJob(data);
+  };
+
+  createNewJob = data => {
     this.props.createNewJob(data);
   };
 
+  saveJob = (id, data) => {
+    this.props.updateItem(id, data);
+  };
+
   render() {
+    const { data, editMode } = this.state;
+
+    if (editMode && !data) return <div>Loading...</div>;
+
+    const description = data ? JSON.parse(data.info.description) : null;
+
     return (
       <Wrapper>
+        {this.state.editMode && <h2>Edit a job</h2>}
         <Form
           onSubmit={this.handleSubmit}
           innerRef={el => (this.inputForm = el)}
@@ -39,29 +83,58 @@ class UpdateJob extends Component {
           <Fieldset>
             <legend>Job description</legend>
             <label>Job Title:</label>
-            <input type="text" name="title" required />
+            <input
+              type="text"
+              name="title"
+              required
+              defaultValue={data ? data.info.title : ''}
+            />
             <h3>Responsibilities:</h3>
-            <textarea name="responsibilities" placeholder="Supports markdown" />
+            <textarea
+              name="responsibilities"
+              placeholder="Supports markdown"
+              defaultValue={data && description.responsibilities}
+            />
             <h3>Requirements:</h3>
-            <textarea name="requirements" placeholder="Supports markdown" />
+            <textarea
+              name="requirements"
+              placeholder="Supports markdown"
+              defaultValue={data && description.requirements}
+            />
             <h3>Compensation:</h3>
-            <textarea name="compensation" placeholder="Supports markdown" />
+            <textarea
+              name="compensation"
+              placeholder="Supports markdown"
+              defaultValue={data && description.compensation}
+            />
             <label>Image URL (link to jpg/jpeg or png image):</label>
-            <input type="url" name="imgUrl" pattern=".+\.jpg|\.jpeg|\.png$" />
+            <input
+              type="url"
+              name="imgUrl"
+              pattern=".+\.jpg|\.jpeg|\.png$"
+              defaultValue={data && data.info.imgUrl}
+            />
             <label>Tags:</label>
             <input
               type="text"
               name="tags"
               placeholder="Comma or space separated (e.g. Senior, JavaScript, EU Tallinn)"
+              defaultValue={data && data.tags.join(' ')}
             />
             <label>Expiration date:</label>
-            <input type="date" name="expDate" required />
+            <input
+              type="date"
+              name="expDate"
+              required
+              defaultValue={data && data.expDate.substr(0, 10)}
+            />
             <div>
               <label htmlFor="featured">Featured: </label>
               <input
                 type="checkbox"
                 id="featured"
                 name="featured"
+                defaultChecked={data && data.isFeatured}
                 ref={el => (this.isFeatured = el)}
               />
             </div>
@@ -69,14 +142,27 @@ class UpdateJob extends Component {
           <Fieldset>
             <legend>About company:</legend>
             <label>Company Name:</label>
-            <input type="text" name="companyName" required />
+            <input
+              type="text"
+              name="companyName"
+              required
+              defaultValue={data && data.companyName}
+            />
             <label>Website:</label>
-            <input type="url" name="website" />
+            <input
+              type="url"
+              name="website"
+              defaultValue={data && data.info.website}
+            />
             <label>Location:</label>
-            <input type="text" name="location" />
+            <input
+              type="text"
+              name="location"
+              defaultValue={data && data.location.substr(3)}
+            />
           </Fieldset>
           <input type="reset" value="Reset" />
-          <input type="submit" value={this.props.isNew ? 'Create' : 'Save'} />
+          <input type="submit" value={editMode ? 'Update' : 'Create'} />
         </Form>
       </Wrapper>
     );

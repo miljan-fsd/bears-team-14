@@ -12,22 +12,13 @@ class UpdateJob extends Component {
       ? props.history.location.pathname.split('/').pop()
       : null;
 
+    const data = findItem(id, props.data);
+
     this.state = {
       editMode: props.editMode,
       id,
+      data,
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!this.state.editMode) return;
-
-    const data = findItem(this.state.id, nextProps.data);
-
-    if (data) {
-      this.setState(() => ({
-        data,
-      }));
-    }
   }
 
   handleSubmit = e => {

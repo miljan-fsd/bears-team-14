@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withScrollToTop } from '../hocs/withScrollToTop';
 
 import { Fieldset, Form, Wrapper } from './styled';
 
@@ -160,4 +161,4 @@ class UpdateJob extends Component {
   }
 }
 
-export default UpdateJob;
+export default withScrollToTop(UpdateJob);

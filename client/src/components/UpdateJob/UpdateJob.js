@@ -63,7 +63,7 @@ class UpdateJob extends Component {
   render() {
     const { data, editMode } = this.state;
 
-    if (editMode && !data) return <div>Loading...</div>;
+    if (editMode && !data) return <Redirect to="/" />;
 
     const description = data ? JSON.parse(data.info.description) : null;
 

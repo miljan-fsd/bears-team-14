@@ -10,6 +10,48 @@ module.exports = {
     }, delay());
   },
 
+  createNew: async function(req, res) {
+    // Remember the form's data.
+    console.log('on server, in createNew', req.body);
+    const {
+      companyName,
+      title,
+      description,
+      imgUrl,
+      website,
+      location,
+      expDate,
+      isFeatured,
+    } = req.body;
+
+    // Change the form's data as needed
+    const tags = JobsHelper.cleanTags(req.body.tags);
+
+    // Create and save the new job as specified by mongoose model
+    const cleanedJob = {
+      _id: String(~~(Math.random() * 1000)),
+      companyName,
+      info: {
+        title,
+        description,
+        imgUrl,
+        website,
+      },
+      isFeatured,
+      location,
+      tags,
+      expDate: new Date(expDate),
+    };
+
+    jobs.push(cleanedJob);
+
+    setTimeout(() => {
+      res.status(201).json({
+        SUCCESS: cleanedJob,
+      });
+    }, delay());
+  },
+
   /*
     Updates a job with any fields that have been sent as a request body.
     Parameters: job id.

@@ -68,6 +68,19 @@ class App extends Component {
     }
   };
 
+  createNewJob = async data => {
+    this.setState(() => ({
+      busy: true,
+    }));
+
+    try {
+      await api.createNewJob(data);
+      this.getItems();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   applyToJob = id => {
     console.log('App.js - Applying to', id);
   };
@@ -83,6 +96,7 @@ class App extends Component {
           <Header />
           <Main
             {...this.state}
+            createNewJob={this.createNewJob}
             deleteItem={this.deleteItem}
             updateItem={this.updateItem}
             handleApply={this.applyToJob}

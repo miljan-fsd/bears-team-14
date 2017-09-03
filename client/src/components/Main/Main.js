@@ -11,6 +11,8 @@ import Login from '../Login';
 import Join from '../Join';
 import Hiring from '../Hiring';
 
+import UpdateJob from '../UpdateJob';
+
 class Main extends React.Component {
   render() {
     const { data, featured, ...rest } = this.props;
@@ -44,6 +46,16 @@ class Main extends React.Component {
         <Route path="/login" component={Login} />
         <Route path="/join" component={Join} />
         <Route path="/hiring" component={Hiring} />
+        <Route
+          path="/add"
+          render={props => <UpdateJob {...props} {...rest} />}
+        />
+        <Route
+          path="/edit/:id"
+          render={props => (
+            <UpdateJob {...props} {...rest} data={data} editMode />
+          )}
+        />
       </div>
     );
   }

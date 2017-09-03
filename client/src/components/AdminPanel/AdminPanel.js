@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   Backdrop,
@@ -106,6 +107,9 @@ class AdminPanel extends Component {
           <Button onClick={this.showFeatured}>
             {showAll ? 'Show Featured' : 'Show All'}
           </Button>
+          <Link to="/add">
+            <Button>Add new</Button>
+          </Link>
         </Controls>
         <TableWrapper>
           <TableHeader>
@@ -116,21 +120,15 @@ class AdminPanel extends Component {
             <div>Expiry Date</div>
           </TableHeader>
           <FlipWithStyle {...flipMoveOptions}>
-            {arr.map((item, i) =>
+            {arr.map((item, i) => (
               <DataLine
                 key={item._id}
                 onClick={this.handleClick.bind(null, item._id)}
                 onChange={this.handleClick.bind(null, item._id)}
               >
-                <div>
-                  {i + 1}.&nbsp;
-                </div>
-                <CompanyName>
-                  {item.companyName}
-                </CompanyName>
-                <PositionDescription>
-                  {item.info.title}
-                </PositionDescription>
+                <div>{i + 1}.&nbsp;</div>
+                <CompanyName>{item.companyName}</CompanyName>
+                <PositionDescription>{item.info.title}</PositionDescription>
                 <CheckBox
                   name="featured"
                   defaultChecked={item.isFeatured}
@@ -141,14 +139,16 @@ class AdminPanel extends Component {
                   type="date"
                   defaultValue={item.expDate.substr(0, 10)}
                 />
-                <FaButton name="edit" title="Edit" disabled>
-                  <i className="fa fa-pencil-square-o" aria-hidden="true" />
-                </FaButton>
+                <Link to={`/edit/${item._id}`}>
+                  <FaButton name="edit" title="Edit">
+                    <i className="fa fa-pencil-square-o" aria-hidden="true" />
+                  </FaButton>
+                </Link>
                 <FaButton name="delete" title="Delete" danger>
                   <i className="fa fa-trash-o" aria-hidden="true" />
                 </FaButton>
               </DataLine>
-            )}
+            ))}
           </FlipWithStyle>
         </TableWrapper>
       </Wrapper>

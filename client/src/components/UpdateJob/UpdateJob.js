@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+
 import { withScrollToTop } from '../hocs/withScrollToTop';
 
 import { Fieldset, Form, Wrapper } from './styled';
 
-const findItem = (id, data) => data.filter(item => item._id === id)[0];
+const findItem = (id, data = []) => data.filter(item => item._id === id)[0];
 
 class UpdateJob extends Component {
   constructor(props) {

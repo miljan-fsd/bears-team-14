@@ -32,9 +32,9 @@ class AdminPanel extends Component {
     super(props);
 
     this.state = {
+      busy: props.busy,
       data: props.data,
       featured: props.featured,
-      busy: props.busy,
       filteredData: props.data,
       searchKey: '',
       showAll: true,
@@ -80,9 +80,6 @@ class AdminPanel extends Component {
         break;
       case 'delete':
         this.props.deleteItem(id);
-        break;
-      case 'edit':
-        console.log('edit clicked', e.type, id);
         break;
       default:
         return;

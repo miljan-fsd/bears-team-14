@@ -1,6 +1,7 @@
 import React from 'react';
 import marked from 'marked';
 // import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { withScrollToTop } from '../hocs/withScrollToTop';
 import { getRemainingTime } from '../../helpers';
@@ -22,6 +23,7 @@ const findItem = (id, data) => data.filter(item => item._id === id)[0];
 const ItemDetails = props => {
   const id = props.history.location.pathname.split('/').pop();
   const data = findItem(id, props.data);
+  const { isAdmin } = props;
 
   if (!data) return <div>Loading...</div>;
 
@@ -93,6 +95,11 @@ const ItemDetails = props => {
         <RoundedButton empty onClick={handleSave}>
           Save <i className="fa fa-bookmark" aria-hidden="true" />
         </RoundedButton>
+        {isAdmin && (
+          <Link to={`/edit/${id}`}>
+            <RoundedButton>Edit</RoundedButton>
+          </Link>
+        )}
         <SideMenuButton>
           <i className="fa fa-bars" aria-hidden="true" />
         </SideMenuButton>

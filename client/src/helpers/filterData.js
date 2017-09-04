@@ -14,6 +14,7 @@ export default (data, keys) => {
         item.info.title &&
         item.info.title.toLowerCase().includes(key)) ||
       (item.tags && lowercaseArray(item.tags).includes(key)) ||
-      (item.location && item.location.toLowerCase().includes(key))
+      (item.location && item.location.toLowerCase().includes(key)) ||
+      (item.companyName && item.companyName.toLowerCase().includes(key))
   );
 };

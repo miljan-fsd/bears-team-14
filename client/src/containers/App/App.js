@@ -18,6 +18,7 @@ class App extends Component {
     this.state = {
       data: [],
       featured: [],
+      isAdmin: true,
       loading: true,
       busy: false,
     };

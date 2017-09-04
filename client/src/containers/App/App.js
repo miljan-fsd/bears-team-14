@@ -16,6 +16,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      createdNewId: null,
       data: [],
       featured: [],
       isAdmin: true,
@@ -75,7 +76,12 @@ class App extends Component {
     }));
 
     try {
-      await api.createNewJob(data);
+      const res = await api.createNewJob(data);
+
+      this.setState(() => ({
+        createdNewId: res.SUCCESS._id,
+      }));
+
       this.getItems();
     } catch (e) {
       console.error(e);

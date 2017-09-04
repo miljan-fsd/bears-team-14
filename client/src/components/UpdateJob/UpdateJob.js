@@ -24,6 +24,12 @@ class UpdateJob extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.createdNewId !== nextProps.createdNewId) {
+      this.props.history.push(`/job/${nextProps.createdNewId}`);
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
 
@@ -47,8 +53,10 @@ class UpdateJob extends Component {
 
     if (!data.imgUrl) data.imgUrl = '/placeholder-image.jpg';
 
+    const history = this.props.history;
+
     this.state.editMode
-      ? this.saveJob(this.state.id, data)
+      ? this.saveJob(this.state.id, data, history)
       : this.createNewJob(data);
   };
 
@@ -56,8 +64,9 @@ class UpdateJob extends Component {
     this.props.createNewJob(data);
   };
 
-  saveJob = (id, data) => {
+  saveJob = (id, data, history = []) => {
     this.props.updateItem(id, data);
+    history.push(`/job/${id}`);
   };
 
   render() {

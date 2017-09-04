@@ -15,7 +15,7 @@ export const Form = styled.form`
 
 export const SearchInput = styled.input.attrs({
   type: 'search',
-  placeholder: 'Search by job title, keyword or location...',
+  placeholder: 'Search by job title, keyword, location or company...',
 })`
   background-color: #fff;
   border: 1px solid #ccc;

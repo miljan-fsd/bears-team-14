@@ -134,6 +134,17 @@ export const RoundedButton = styled.button`
   }
 `;
 
+export const DangerButton = RoundedButton.extend`
+  background-color: #ff3860;
+  border: 1px solid #ff3860;
+
+  &:hover {
+    background-color: #ff2b56;
+    border: 1px solid #ff2b56;
+    color: #fff;
+  }
+`;
+
 export const SideMenuButton = styled.button`
   background-color: #fff;
   border: none;

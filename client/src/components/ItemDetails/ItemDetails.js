@@ -7,6 +7,7 @@ import { withScrollToTop } from '../hocs/withScrollToTop';
 import { getRemainingTime } from '../../helpers';
 
 import {
+  DangerButton,
   HeroImage,
   JobInfoSocial,
   JobTimeInfo,
@@ -33,6 +34,11 @@ const ItemDetails = props => {
 
   const handleSave = () => {
     props.handleSave(data._id);
+  };
+
+  const handleDelete = () => {
+    props.deleteItem(id);
+    props.history.push(`/jobs`);
   };
 
   return (
@@ -100,6 +106,7 @@ const ItemDetails = props => {
             <RoundedButton>Edit</RoundedButton>
           </Link>
         )}
+        {isAdmin && <DangerButton onClick={handleDelete}>Delete</DangerButton>}
         <SideMenuButton>
           <i className="fa fa-bars" aria-hidden="true" />
         </SideMenuButton>

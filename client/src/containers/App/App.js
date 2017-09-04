@@ -94,7 +94,7 @@ class App extends Component {
     return (
       <Router>
         <div className="app-wrapper">
-          <Header />
+          <Header isAdmin={this.state.isAdmin} />
           <Main
             {...this.state}
             createNewJob={this.createNewJob}

@@ -7,6 +7,7 @@ import api from '../../api';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Main from '../../components/Main';
+import TempSettings from '../../components/TempSettings';
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class App extends Component {
       createdNewId: null,
       data: [],
       featured: [],
-      isAdmin: true,
+      isAdmin: false,
       loading: true,
     };
   }
@@ -93,10 +94,18 @@ class App extends Component {
     console.log('App.js - Save', id);
   };
 
+  toggleAdmin = e => {
+    const isAdmin = e.target.checked;
+    this.setState(() => ({
+      isAdmin,
+    }));
+  };
+
   render() {
     return (
       <Router>
         <div className="app-wrapper">
+          <TempSettings toggleAdmin={this.toggleAdmin} />
           <Header isAdmin={this.state.isAdmin} />
           <Main
             {...this.state}

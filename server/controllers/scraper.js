@@ -33,15 +33,35 @@ function scrapeInfo(html) {
 
   $('.listing-main-content-block').each((i, el) => {
     const descr = {};
-    descr.responsibilities = $(el).find($('#responsibilities .items')).text();
-    descr.requirements = $(el).find($('#requirements .items')).text();
-    descr.compensation = $(el).find($('#compensation .items')).text();
+    descr.responsibilities = $(el)
+      .find($('#responsibilities .items'))
+      .text()
+      .replace(/\n/g, '\n\n* ')
+      .replace(/\n\*\s$/, '');
+    descr.requirements = $(el)
+      .find($('#requirements .items'))
+      .text()
+      .replace(/\n/g, '\n\n* ')
+      .replace(/\n\*\s$/, '');
+    descr.compensation = $(el)
+      .find($('#compensation .items'))
+      .text()
+      .replace(/\n/g, '\n\n* ')
+      .replace(/\n\*\s$/, '');
     jobData.description = JSON.stringify(descr);
 
-    jobData.companyName = $(el).find($('.header-name').get(1)).text();
-    jobData.title = $(el).find($('.header-name').get(0)).text();
-    jobData.website = $(el).find($('.website-link > a')).attr('href');
-    jobData.location = $(el).find($('.header-label')).text();
+    jobData.companyName = $(el)
+      .find($('.header-name').get(1))
+      .text();
+    jobData.title = $(el)
+      .find($('.header-name').get(0))
+      .text();
+    jobData.website = $(el)
+      .find($('.website-link > a'))
+      .attr('href');
+    jobData.location = $(el)
+      .find($('.header-label'))
+      .text();
     jobData.tags = $(el)
       .find($('.tags > .listing-block-section'))
       .text()

@@ -22,26 +22,46 @@ async function scrapeText(html) {
 
 function scrapeInfo(html) {
   const $ = cheerio.load(html);
+  const expDate = Date.now() + ~~(Math.random() * 30 + 15) * 86400000;
   const jobData = {
     isFeatured: false,
-    expDate: 1504224000,
+    expDate,
   };
   jobData.imgUrl = `https://www.jobbatical.com${$(
     '.hero-section.js-listing-hero'
   ).data('image')}`;
-  jobData.expDate = 1504224000000;
 
   $('.listing-main-content-block').each((i, el) => {
     const descr = {};
-    descr.responsibilities = $(el).find($('#responsibilities .items')).text();
-    descr.requirements = $(el).find($('#requirements .items')).text();
-    descr.compensation = $(el).find($('#compensation .items')).text();
+    descr.responsibilities = $(el)
+      .find($('#responsibilities .items'))
+      .text()
+      .replace(/\n/g, '\n\n* ')
+      .replace(/\n\*\s$/, '');
+    descr.requirements = $(el)
+      .find($('#requirements .items'))
+      .text()
+      .replace(/\n/g, '\n\n* ')
+      .replace(/\n\*\s$/, '');
+    descr.compensation = $(el)
+      .find($('#compensation .items'))
+      .text()
+      .replace(/\n/g, '\n\n* ')
+      .replace(/\n\*\s$/, '');
     jobData.description = JSON.stringify(descr);
 
-    jobData.companyName = $(el).find($('.header-name').get(1)).text();
-    jobData.title = $(el).find($('.header-name').get(0)).text();
-    jobData.website = $(el).find($('.website-link > a')).attr('href');
-    jobData.location = $(el).find($('.header-label')).text();
+    jobData.companyName = $(el)
+      .find($('.header-name').get(1))
+      .text();
+    jobData.title = $(el)
+      .find($('.header-name').get(0))
+      .text();
+    jobData.website = $(el)
+      .find($('.website-link > a'))
+      .attr('href');
+    jobData.location = $(el)
+      .find($('.header-label'))
+      .text();
     jobData.tags = $(el)
       .find($('.tags > .listing-block-section'))
       .text()

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LazyLoad from 'react-lazyload';
 
-import getRemainingTime from './getRemainingTime';
+import getRemainingTime from '../../helpers/getRemainingTime';
 
 import {
   Bookmark,

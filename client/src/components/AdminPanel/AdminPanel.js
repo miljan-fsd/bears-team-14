@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import Search from '../Search';
 
 import {
   Backdrop,
@@ -15,6 +18,8 @@ import {
   Wrapper,
 } from './style';
 
+import filterData from '../../helpers/filterData';
+
 const flipMoveOptions = {
   duration: 350,
   easing: 'ease-out',
@@ -27,9 +32,11 @@ class AdminPanel extends Component {
     super(props);
 
     this.state = {
+      busy: props.busy,
       data: props.data,
       featured: props.featured,
-      busy: props.busy,
+      filteredData: props.data,
+      searchKey: '',
       showAll: true,
     };
   }
@@ -44,6 +51,23 @@ class AdminPanel extends Component {
     return new Date(timestamp);
   };
 
+  filterItems = (key = '') => {
+    const data = this.state.data;
+    if (!key.length)
+      return this.setState(() => ({
+        filteredData: data,
+        showFoundCount: false,
+      }));
+
+    const filteredData = filterData(data, key);
+
+    this.setState(() => ({
+      filteredData,
+      showFoundCount: true,
+      searchKey: key,
+    }));
+  };
+
   handleClick = (id, e) => {
     switch (e.target.name) {
       case 'date':
@@ -56,9 +80,6 @@ class AdminPanel extends Component {
         break;
       case 'delete':
         this.props.deleteItem(id);
-        break;
-      case 'edit':
-        console.log('edit clicked', e.type, id);
         break;
       default:
         return;
@@ -79,7 +100,15 @@ class AdminPanel extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
+    let filteredData = nextProps.data;
+    const { searchKey } = this.state;
+
+    if (searchKey.length) {
+      filteredData = filterData(nextProps.data, searchKey);
+    }
+
     this.setState(() => ({
+      filteredData,
       ...nextProps,
     }));
   }
@@ -92,66 +121,69 @@ class AdminPanel extends Component {
   }
 
   render() {
-    const { busy, data, featured, showAll } = this.state;
+    const { busy, featured, showAll } = this.state;
+    const data = this.state.filteredData;
 
     const arr = showAll ? data : featured;
 
     return (
-      <Wrapper>
-        {busy && <Backdrop />}
-        <Controls>
-          <div>
-            Total Items: {data.length} | Total Featured: {featured.length}{' '}
-          </div>
-          <Button onClick={this.showFeatured}>
-            {showAll ? 'Show Featured' : 'Show All'}
-          </Button>
-        </Controls>
-        <TableWrapper>
-          <TableHeader>
-            <div>Nr</div>
-            <div>Company</div>
-            <div>Position</div>
-            <div>Featured</div>
-            <div>Expiry Date</div>
-          </TableHeader>
-          <FlipWithStyle {...flipMoveOptions}>
-            {arr.map((item, i) =>
-              <DataLine
-                key={item._id}
-                onClick={this.handleClick.bind(null, item._id)}
-                onChange={this.handleClick.bind(null, item._id)}
-              >
-                <div>
-                  {i + 1}.&nbsp;
-                </div>
-                <CompanyName>
-                  {item.companyName}
-                </CompanyName>
-                <PositionDescription>
-                  {item.info.title}
-                </PositionDescription>
-                <CheckBox
-                  name="featured"
-                  defaultChecked={item.isFeatured}
-                  title={item.isFeatured ? 'Featured' : 'Not featured'}
-                />
-                <input
-                  name="date"
-                  type="date"
-                  defaultValue={item.expDate.substr(0, 10)}
-                />
-                <FaButton name="edit" title="Edit" disabled>
-                  <i className="fa fa-pencil-square-o" aria-hidden="true" />
-                </FaButton>
-                <FaButton name="delete" title="Delete" danger>
-                  <i className="fa fa-trash-o" aria-hidden="true" />
-                </FaButton>
-              </DataLine>
-            )}
-          </FlipWithStyle>
-        </TableWrapper>
-      </Wrapper>
+      <div>
+        <Wrapper>
+          {busy && <Backdrop />}
+          <Controls>
+            <div>
+              Total Items: {data.length} | Total Featured: {featured.length}{' '}
+            </div>
+            <Button onClick={this.showFeatured}>
+              {showAll ? 'Show Featured' : 'Show All'}
+            </Button>
+            <Link to="/add">
+              <Button>Add new</Button>
+            </Link>
+            <Search handleFilter={this.filterItems} />
+          </Controls>
+          <TableWrapper>
+            <TableHeader>
+              <div>Nr</div>
+              <div>Company</div>
+              <div>Position</div>
+              <div>Featured</div>
+              <div>Expiry Date</div>
+            </TableHeader>
+            <FlipWithStyle {...flipMoveOptions}>
+              {arr.map((item, i) => (
+                <DataLine
+                  key={item._id}
+                  onClick={this.handleClick.bind(null, item._id)}
+                  onChange={this.handleClick.bind(null, item._id)}
+                >
+                  <div>{i + 1}.&nbsp;</div>
+                  <CompanyName>{item.companyName}</CompanyName>
+                  <PositionDescription>{item.info.title}</PositionDescription>
+                  <CheckBox
+                    name="featured"
+                    defaultChecked={item.isFeatured}
+                    title={item.isFeatured ? 'Featured' : 'Not featured'}
+                  />
+                  <input
+                    name="date"
+                    type="date"
+                    defaultValue={item.expDate.substr(0, 10)}
+                  />
+                  <Link to={`/edit/${item._id}`}>
+                    <FaButton name="edit" title="Edit">
+                      <i className="fa fa-pencil-square-o" aria-hidden="true" />
+                    </FaButton>
+                  </Link>
+                  <FaButton name="delete" title="Delete" danger>
+                    <i className="fa fa-trash-o" aria-hidden="true" />
+                  </FaButton>
+                </DataLine>
+              ))}
+            </FlipWithStyle>
+          </TableWrapper>
+        </Wrapper>
+      </div>
     );
   }
 }

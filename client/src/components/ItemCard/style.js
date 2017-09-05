@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
 import { breakSmall } from './../../common-styles/layout';
+const cardHeight = 400;
 // const mainColor = `rgb(28, 117, 188);`;
 
 export const Wrapper = styled.div`
+  background-color: #fff;
   border: 1px solid rgb(238, 238, 238);
   border-radius: 5px;
   box-shadow: 0;
@@ -11,8 +13,8 @@ export const Wrapper = styled.div`
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  font-family: "Open Sans", Helvetica, sans-serif;
-  height: 400px;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  height: ${cardHeight}px;
   margin-bottom: 20px;
   max-width: 740px;
   transition: box-shadow 0.4s ease;
@@ -28,10 +30,11 @@ export const Wrapper = styled.div`
 `;
 
 export const Save = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
+  padding: 8px;
 
   &:hover {
     color: #000;
@@ -93,6 +96,10 @@ export const Details = styled.div`
   text-overflow: clip;
   text-transform: uppercase;
   width: 100%;
+
+  & > span {
+    color: rgb(102, 102, 102);
+  }
 `;
 
 export const Footer = styled.footer`
@@ -108,6 +115,7 @@ export const Footer = styled.footer`
 `;
 
 export const Image = styled.div`
+  background-image: url(${params => params.imgUrl});
   background-position: 50% 50%;
   background-size: cover;
   border-radius: 5px 5px 0 0;
@@ -121,14 +129,6 @@ export const Image = styled.div`
       height: 175px;
     }
   }
-
-  ${'' /* @media (min-width: ${breakLarge}px) {
-    height: 240px;
-
-    ${Wrapper}:hover & {
-      height: 200px;
-    }
-  } */};
 `;
 
 export const Title = styled.h2`
@@ -140,4 +140,13 @@ export const Title = styled.h2`
 export const GreenSpan = styled.span`
   color: rgb(38, 185, 153);
   font-weight: bold;
+`;
+
+export const Placeholder = Wrapper.extend`
+  align-items: center;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  font-size: 40px;
+  justify-content: center;
 `;

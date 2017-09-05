@@ -5,6 +5,7 @@ import './style.css';
 
 class Header extends Component {
   render() {
+    const { isAdmin } = this.props;
     return (
       <div>
         <div className="navbar">
@@ -29,6 +30,15 @@ class Header extends Component {
               >
                 Explore Jobs
               </NavLink>
+              {isAdmin && (
+                <NavLink
+                  activeClassName="selected"
+                  className="navbar-item"
+                  to="/admin"
+                >
+                  Admin Panel
+                </NavLink>
+              )}
             </div>
             <div className="navbar-end">
               <NavLink

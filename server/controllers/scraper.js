@@ -22,14 +22,14 @@ async function scrapeText(html) {
 
 function scrapeInfo(html) {
   const $ = cheerio.load(html);
+  const expDate = Date.now() + ~~(Math.random() * 30 + 15) * 86400000;
   const jobData = {
     isFeatured: false,
-    expDate: 1504224000,
+    expDate,
   };
   jobData.imgUrl = `https://www.jobbatical.com${$(
     '.hero-section.js-listing-hero'
   ).data('image')}`;
-  jobData.expDate = 1504224000000;
 
   $('.listing-main-content-block').each((i, el) => {
     const descr = {};

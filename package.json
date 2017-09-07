@@ -4,7 +4,7 @@
   "description": "## Jobbatical clone!",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "NODE_ENV=test mocha",
     "start": "npm-run-all --parallel watch:server start:client",
     "watch:server": "nodemon server.js",
     "start:client": "cd client && yarn start",

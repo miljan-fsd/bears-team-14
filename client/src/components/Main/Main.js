@@ -43,7 +43,7 @@ class Main extends React.Component {
           render={props => <ItemDetails {...props} {...rest} data={data} />}
         />
         <Route path="/jobs" render={props => <Jobs {...props} data={data} />} />
-        <Route path="/login" component={Login} />
+        <Route path="/login" render={props => <Login {...props} {...rest} />} />
         <Route path="/join" component={Join} />
         <Route path="/hiring" component={Hiring} />
         <Route

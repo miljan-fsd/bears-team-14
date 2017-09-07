@@ -94,6 +94,19 @@ class App extends Component {
     console.log('App.js - Save', id);
   };
 
+  loginUser = (username, password) => {
+    api
+      .loginUser(username, password)
+      .then(json => {
+        console.log(json);
+        this.setState(() => ({
+          loggedIn: true,
+          isAdmin: json.isAdmin,
+        }));
+      })
+      .catch(err => console.log('Login error:', err));
+  };
+
   toggleAdmin = e => {
     const isAdmin = e.target.checked;
     this.setState(() => ({
@@ -106,11 +119,12 @@ class App extends Component {
       <Router>
         <div className="app-wrapper">
           <TempSettings toggleAdmin={this.toggleAdmin} />
-          <Header isAdmin={this.state.isAdmin} />
+          <Header isAdmin={this.state.isAdmin} loggedIn={this.state.loggedIn} />
           <Main
             {...this.state}
             createNewJob={this.createNewJob}
             deleteItem={this.deleteItem}
+            handleLogin={this.loginUser}
             updateItem={this.updateItem}
             handleApply={this.applyToJob}
             handleSave={this.saveJob}

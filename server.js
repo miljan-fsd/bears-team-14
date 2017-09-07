@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const LocalStrategy = require('passport-local').Strategy;
 const passport = require('passport');
+const path = require('path');
 const session = require('express-session');
 const mongoose = require('./server/mongoose');
 const bodyParser = require('body-parser');
@@ -14,6 +15,7 @@ const ErrorHandler = require('./server/controllers/ErrorHandler.js');
 const app = express();
 // Might not need bodyParser.json()
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -64,6 +66,9 @@ app.post('/login/', authController.login, (req, res) => {
 });
 
 app.get('/logout/', authController.logout);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
 // ====== Error Handler Middleware =====
 app.use(ErrorHandler);
 

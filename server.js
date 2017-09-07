@@ -38,13 +38,13 @@ passport.deserializeUser(User.deserializeUser());
 // ===== Routes =====
 const authController = require('./server/controllers/authController');
 const userController = require('./server/controllers/userController');
-const userHandler = require('./server/routes/userHandler');
+const jobRoutes = require('./server/routes/jobs');
 
 // ===== Server Setup =====
 const PORT = process.env.PORT || 3001;
 
 // ===== App Use Routes =====
-app.use('/api/v1', userHandler);
+app.use('/api/v1', jobRoutes);
 
 app.get('/test-login/', authController.isLoggedIn, (req, res) => {
   res.send(`Logged in as ${req.user.username}`);

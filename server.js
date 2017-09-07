@@ -60,7 +60,10 @@ app.post(
 );
 
 app.post('/login/', authController.login, (req, res) => {
-  res.send({ loggedIn: true });
+  res.send({
+    loggedIn: true,
+    isAdmin: req.user.isAdmin,
+  });
 });
 
 app.get('/logout/', authController.logout);

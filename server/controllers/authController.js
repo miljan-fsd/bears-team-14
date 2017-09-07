@@ -14,7 +14,15 @@ const isLoggedIn = (req, res, next) => {
   next('Not logged in');
 };
 
+const isAdmin = (req, res, next) => {
+  if (req.isAuthenticated() && req.user.isAdmin) {
+    return next();
+  }
+  next('Not an admin or not logged in');
+};
+
 module.exports = {
+  isAdmin,
   isLoggedIn,
   login,
   logout,

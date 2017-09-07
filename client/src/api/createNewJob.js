@@ -3,6 +3,7 @@ export default (data = {}) =>
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     method: 'POST',
     body: JSON.stringify(data),
   })

@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 const express = require('express');
+const mongoose = require('./server/mongoose');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 
 const config = require('./server/_config.js');
 const ErrorHandler = require('./server/controllers/ErrorHandler.js');
@@ -23,23 +23,6 @@ const Job = require('./server/models/Job.js');
 // ===== Routes =====
 const authRoute = require('./server/routes/authentication');
 const userHandler = require('./server/routes/userHandler');
-
-// ===== Mongoose Setup =====
-mongoose.Promise = global.Promise;
-mongoose
-  .connect(config.mongoURI[app.settings.env], {
-    useMongoClient: true,
-  })
-  .then(
-    () => {
-      console.log(
-        'Connected to Database: ' + config.mongoURI[app.settings.env]
-      );
-    },
-    err => {
-      console.log('Error connecting to the Database. ' + err);
-    }
-  );
 
 // ===== Server Setup =====
 const PORT = process.env.PORT || 3001;

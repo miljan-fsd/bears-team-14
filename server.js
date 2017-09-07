@@ -1,56 +1,82 @@
 require('dotenv').config();
 
-const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const express = require('express');
+const LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport');
+const path = require('path');
+const session = require('express-session');
+
+const mongoose = require('./server/mongoose');
 
 const config = require('./server/_config.js');
 const ErrorHandler = require('./server/controllers/ErrorHandler.js');
+const User = mongoose.model('User');
 
 // ===== App Setup =====
 const app = express();
-// Might not need bodyParser.json()
+
 app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
 app.use(
-  bodyParser.urlencoded({
-    extended: true,
+  session({
+    secret: 'supersecret',
+    resave: true,
+    saveUninitialized: true,
   })
 );
 
-// ===== Models =====
-const Job = require('./server/models/Job.js');
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // ===== Routes =====
-const authRoute = require('./server/routes/authentication');
-const userHandler = require('./server/routes/userHandler');
-
-// ===== Mongoose Setup =====
-mongoose.Promise = global.Promise;
-mongoose
-  .connect(config.mongoURI[app.settings.env], {
-    useMongoClient: true,
-  })
-  .then(
-    () => {
-      console.log(
-        'Connected to Database: ' + config.mongoURI[app.settings.env]
-      );
-    },
-    err => {
-      console.log('Error connecting to the Database. ' + err);
-    }
-  );
+const authController = require('./server/controllers/authController');
+const userController = require('./server/controllers/userController');
+const jobRoutes = require('./server/routes/jobs');
 
 // ===== Server Setup =====
 const PORT = process.env.PORT || 3001;
 
 // ===== App Use Routes =====
-//app.use(authRoute);
-app.use('/api/v1', userHandler);
+app.use('/api/v1', jobRoutes);
+
+app.get('/test-login/', authController.isLoggedIn, (req, res) => {
+  res.send(`Logged in as ${req.user.username}`);
+});
+
+app.post(
+  '/register/',
+  userController.register,
+  authController.login,
+  (req, res) => {
+    res.json({ loggedIn: true });
+  }
+);
+
+app.post('/login/', authController.login, (req, res) => {
+  res.send({
+    loggedIn: true,
+    isAdmin: req.user.isAdmin,
+  });
+});
+
+app.get('/logout/', authController.logout);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
 
 // ====== Error Handler Middleware =====
 app.use(ErrorHandler);
 
-module.exports = app.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log('API listening on port ' + PORT);
 });
+
+module.exports = app;

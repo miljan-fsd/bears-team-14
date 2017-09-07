@@ -4,6 +4,27 @@ import { Link } from 'react-router-dom';
 import './style.css';
 
 class Login extends Component {
+  userLogin = e => {
+    e.preventDefault();
+
+    const username = this.username.value;
+    const password = this.password.value;
+
+    this.props.handleLogin(username, password);
+  };
+
+  componentDidMount() {
+    if (this.props.loggedIn) {
+      this.props.history.replace('/');
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.loggedIn) {
+      this.props.history.replace(`/`);
+    }
+  }
+
   render() {
     return (
       <div className="login">
@@ -51,21 +72,21 @@ class Login extends Component {
 
               <div className="divider line">OR</div>
 
-              <form action="#">
+              <form onSubmit={this.userLogin}>
                 <div className="field">
-                  <label className="label" htmlFor="email">
-                    Your Email
+                  <label className="label" htmlFor="text">
+                    Username
                   </label>
                   <div className="control has-icons-left">
                     <input
+                      autoFocus
                       className="input is-large"
-                      type="email"
-                      placeholder="name@example.com"
-                      name="email"
+                      type="text"
+                      placeholder="username"
+                      name="username"
+                      ref={el => (this.username = el)}
+                      required
                     />
-                    <span className="icon is-medium is-left">
-                      <i className="fa fa-envelope" />
-                    </span>
                   </div>
                 </div>
 
@@ -79,6 +100,8 @@ class Login extends Component {
                       type="password"
                       placeholder="password"
                       name="password"
+                      ref={el => (this.password = el)}
+                      required
                     />
                     <span className="icon is-medium is-left">
                       <i className="fa fa-lock" />

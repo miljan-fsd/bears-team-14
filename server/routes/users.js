@@ -13,9 +13,9 @@ function catchErrors(fn) {
 
 router.get('/user/:username', checkLogin, catchErrors(userHandler.getUser));
 router.put(
-  '/user/:username/:jobId',
+  '/user/:jobId',
   checkLogin,
-  catchErrors(userHandler.saveJob)
+  catchErrors(userHandler.selectJobAction)
 );
 
 module.exports = router;

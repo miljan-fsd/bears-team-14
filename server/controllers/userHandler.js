@@ -31,5 +31,5 @@ const selectJobAction = (req, res) => {
 
 module.exports = {
   getUser,
-  saveJob,
+  selectJobAction,
 };

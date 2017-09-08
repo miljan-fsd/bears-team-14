@@ -4,8 +4,9 @@ import LazyLoad from 'react-lazyload';
 
 import getRemainingTime from '../../helpers/getRemainingTime';
 
+import SmallSave from '../SmallSave';
+
 import {
-  Bookmark,
   Description,
   DescriptionText,
   Details,
@@ -13,7 +14,6 @@ import {
   GreenSpan,
   Image,
   Placeholder,
-  Save,
   Title,
   Wrapper,
 } from './style.js';
@@ -31,7 +31,6 @@ const ItemCard = ({
   title,
   description,
   expDate,
-  isSaved,
   companyName,
   location,
 }) => {
@@ -39,10 +38,12 @@ const ItemCard = ({
     const name = e.target.dataset.name;
     const history = props.history;
 
-    if (name === 'save') return console.log('Saving...');
+    if (name === 'save') return props.handleSave(id);
 
     history && history.push(`/job/${id}`);
   };
+
+  const isSaved = props.savedJobs && props.savedJobs.includes(id);
 
   return (
     <LazyLoad {...lazyLoadConfig}>
@@ -66,12 +67,7 @@ const ItemCard = ({
           <div>
             <GreenSpan>{getRemainingTime(expDate)}</GreenSpan> to apply
           </div>
-          <Save data-name="save">
-            Save&nbsp;
-            <Bookmark>
-              <i className="fa fa-bookmark" aria-hidden="true" />
-            </Bookmark>
-          </Save>
+          <SmallSave isSaved={isSaved} />
         </Footer>
       </Wrapper>
     </LazyLoad>
@@ -84,12 +80,10 @@ ItemCard.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   expDate: PropTypes.string.isRequired,
-  isSaved: PropTypes.bool,
 };
 
 ItemCard.defaultProps = {
   imgUrl: '/placeholder-image.png',
-  isSaved: false,
 };
 
 export default ItemCard;

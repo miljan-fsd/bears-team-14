@@ -39,12 +39,14 @@ passport.deserializeUser(User.deserializeUser());
 const authController = require('./server/controllers/authController');
 const userController = require('./server/controllers/userController');
 const jobRoutes = require('./server/routes/jobs');
+const userRoutes = require('./server/routes/users');
 
 // ===== Server Setup =====
 const PORT = process.env.PORT || 3001;
 
 // ===== App Use Routes =====
 app.use('/api/v1', jobRoutes);
+app.use('/api/v1', userRoutes);
 
 app.get('/test-login/', authController.isLoggedIn, (req, res) => {
   res.send(`Logged in as ${req.user.username}`);
@@ -63,6 +65,7 @@ app.post('/login/', authController.login, (req, res) => {
   res.send({
     loggedIn: true,
     isAdmin: req.user.isAdmin,
+    username: req.user.username,
   });
 });
 

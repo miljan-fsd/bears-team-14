@@ -99,7 +99,6 @@ class App extends Component {
   };
 
   saveJob = id => {
-    console.log('App.js - Save', id);
     if (!this.state.loggedIn) return;
     api.userSaveJob(id).then(() => this.getUser());
   };
@@ -108,7 +107,6 @@ class App extends Component {
     api
       .loginUser(username, password)
       .then(json => {
-        console.log(json);
         this.setState(
           () => ({
             loggedIn: true,

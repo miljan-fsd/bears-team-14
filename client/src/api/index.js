@@ -4,6 +4,7 @@ import getItems from './getItems';
 import getUser from './getUser';
 import loginUser from './loginUser';
 import updateItem from './updateItem';
+import userSaveJob from './userSaveJob';
 
 export default {
   createNewJob,
@@ -12,4 +13,5 @@ export default {
   getUser,
   loginUser,
   updateItem,
+  userSaveJob,
 };

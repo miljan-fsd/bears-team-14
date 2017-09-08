@@ -1,9 +1,10 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import './style.css';
 
 import AdminPanel from '../AdminPanel';
+import Bookmarks from '../Bookmarks';
 import Home from '../Home';
 import ItemDetails from '../ItemDetails';
 import Jobs from '../Jobs';
@@ -58,6 +59,15 @@ class Main extends React.Component {
           render={props => (
             <UpdateJob {...props} {...rest} data={data} editMode />
           )}
+        />
+        <Route
+          path="/bookmarks"
+          render={props =>
+            rest.loggedIn ? (
+              <Bookmarks {...props} {...rest} data={data} />
+            ) : (
+              <Redirect to="/" />
+            )}
         />
       </div>
     );

@@ -46,6 +46,15 @@ const Header = props => {
               Join
             </NavLink>
           )}
+          {loggedIn && (
+            <NavLink
+              activeClassName="selected"
+              className="navbar-item"
+              to="/bookmarks"
+            >
+              My saved jobs
+            </NavLink>
+          )}
         </div>
       </div>
     </div>

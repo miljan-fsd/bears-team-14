@@ -23,7 +23,7 @@ class Main extends React.Component {
           exact
           path="/"
           render={props => (
-            <Home {...props} data={featured} total={data.length} />
+            <Home {...props} {...rest} data={featured} total={data.length} />
           )}
         />
         <Route
@@ -42,7 +42,10 @@ class Main extends React.Component {
           path="/job/:id"
           render={props => <ItemDetails {...props} {...rest} data={data} />}
         />
-        <Route path="/jobs" render={props => <Jobs {...props} data={data} />} />
+        <Route
+          path="/jobs"
+          render={props => <Jobs {...props} {...rest} data={data} />}
+        />
         <Route path="/login" render={props => <Login {...props} {...rest} />} />
         <Route path="/join" component={Join} />
         <Route path="/hiring" component={Hiring} />

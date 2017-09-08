@@ -86,6 +86,14 @@ class App extends Component {
     }
   };
 
+  getUser = username => {
+    api.getUser(username).then(data => {
+      this.setState(() => ({
+        savedJobs: data.savedJobs,
+      }));
+    });
+  };
+
   applyToJob = id => {
     console.log('App.js - Applying to', id);
   };
@@ -101,10 +109,16 @@ class App extends Component {
       .loginUser(username, password)
       .then(json => {
         console.log(json);
-        this.setState(() => ({
-          loggedIn: true,
-          isAdmin: json.isAdmin,
-        }));
+        this.setState(
+          () => ({
+            loggedIn: true,
+            isAdmin: json.isAdmin,
+            username: json.username,
+          }),
+          () => {
+            this.getUser(this.state.username);
+          }
+        );
       })
       .catch(err => console.log('Login error:', err));
   };

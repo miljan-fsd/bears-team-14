@@ -25,6 +25,8 @@ const ItemDetails = props => {
   const id = props.history.location.pathname.split('/').pop();
   const data = findItem(id, props.data);
   const { isAdmin } = props;
+  const isSaved = props.savedJobs && props.savedJobs.includes(id);
+  const caption = isSaved ? 'Saved' : 'Save';
 
   if (!data) return <div>Loading...</div>;
 
@@ -98,8 +100,9 @@ const ItemDetails = props => {
         <RoundedButton first onClick={handleApply}>
           Apply now
         </RoundedButton>
-        <RoundedButton empty onClick={handleSave}>
-          Save <i className="fa fa-bookmark" aria-hidden="true" />
+        <RoundedButton empty={!isSaved} onClick={handleSave}>
+          {caption}&nbsp;
+          <i className="fa fa-bookmark" aria-hidden="true" />
         </RoundedButton>
         {isAdmin && (
           <Link to={`/edit/${id}`}>

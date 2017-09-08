@@ -92,6 +92,8 @@ class App extends Component {
 
   saveJob = id => {
     console.log('App.js - Save', id);
+    if (!this.state.loggedIn) return;
+    api.userSaveJob(id).then(() => this.getUser());
   };
 
   loginUser = (username, password) => {

@@ -6,8 +6,22 @@ const getUser = async (req, res) => {
 };
 
 const saveJob = async (req, res) => {
-  console.log('saveJob', req.params.username, req.params.jobId);
-  res.send('saveJob');
+  const { jobId } = req.params;
+
+  if (!req.user) return res.status(401).send();
+
+  const { username } = req.user;
+
+  const user = await User.findOne({ username });
+  const jobIndex = user.savedJobs.indexOf(jobId);
+
+  !~jobIndex ? user.savedJobs.push(jobId) : user.savedJobs.splice(jobIndex, 1);
+
+  const result = await user.save();
+  // Temp status for testing
+  const status = ~result.savedJobs.indexOf(jobId) ? 'saved to' : 'removed from';
+  res.send(`Job ${jobId} ${status} ${username} profile.`);
+};
 };
 
 module.exports = {

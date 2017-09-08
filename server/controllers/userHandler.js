@@ -2,7 +2,13 @@ const User = require('../models/User.js');
 
 const getUser = async (req, res) => {
   console.log('getUser', req.params.username);
-  res.send('getUser');
+  if (!req.user) return res.status(401).send();
+
+  const { username } = req.user;
+
+  const user = await User.findOne({ username });
+
+  res.json(user);
 };
 
 const saveJob = async (req, res) => {

@@ -65,6 +65,7 @@ app.post('/login/', authController.login, (req, res) => {
   res.send({
     loggedIn: true,
     isAdmin: req.user.isAdmin,
+    username: req.user.username,
   });
 });
 

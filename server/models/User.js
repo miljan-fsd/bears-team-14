@@ -9,6 +9,12 @@ const userSchema = new Schema({
     required: 'Username is required',
     trim: true,
   },
+  savedJobs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Job',
+    },
+  ],
   isAdmin: {
     type: Boolean,
     default: false,

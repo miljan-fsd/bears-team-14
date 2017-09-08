@@ -7,9 +7,12 @@ import FeaturedItems from '../FeaturedItems';
 import { Header, Status } from './styled';
 
 const Bookmarks = ({ savedJobs = [], data, loggedIn, ...props }) => {
-  const jobs = savedJobs.map(id => {
-    return data.filter(job => job._id === id)[0];
-  });
+  const jobs = savedJobs.reduce((acc, id) => {
+    const job = data.find(job => job._id === id);
+    if (job) acc.push(job);
+    return acc;
+  }, []);
+
   const status = !jobs.length
     ? `You haven't saved any jobs yet`
     : `You have ${jobs.length} saved job${jobs.length === 1 ? '' : 's'}`;

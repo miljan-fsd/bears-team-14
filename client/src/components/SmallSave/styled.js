@@ -16,6 +16,7 @@ export const Bookmark = styled.span`
   color: ${props => (props.saved ? '#04d092' : '#bbb')};
   line-height: 12px;
   margin-left: 6px;
+  pointer-events: none;
   width: 8px;
 
   & > .fa {

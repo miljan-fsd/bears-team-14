@@ -13,7 +13,7 @@ export const Save = styled.div`
 `;
 
 export const Bookmark = styled.span`
-  color: #bbb;
+  color: ${props => (props.saved ? '#04d092' : '#bbb')};
   line-height: 12px;
   margin-left: 6px;
   width: 8px;

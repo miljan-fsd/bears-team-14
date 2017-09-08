@@ -39,7 +39,7 @@ class SmallSave extends Component {
         onMouseLeave={this.handleMouseLeave}
       >
         {caption}&nbsp;
-        <Bookmark>
+        <Bookmark saved={this.props.isSaved}>
           <i className="fa fa-bookmark" aria-hidden="true" />
         </Bookmark>
       </Save>

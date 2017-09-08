@@ -22,6 +22,11 @@ const saveJob = async (req, res) => {
   const status = ~result.savedJobs.indexOf(jobId) ? 'saved to' : 'removed from';
   res.send(`Job ${jobId} ${status} ${username} profile.`);
 };
+
+const selectJobAction = (req, res) => {
+  // Use req.query.hasOwnProperty() to select different method
+  // Default to 'save'
+  return saveJob(req, res);
 };
 
 module.exports = {

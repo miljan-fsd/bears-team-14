@@ -6,7 +6,9 @@ import FeaturedItems from '../FeaturedItems';
 
 import { Header, Status } from './styled';
 
-const Bookmarks = ({ savedJobs = [], data, loggedIn, ...props }) => {
+const Bookmarks = props => {
+  const { savedJobs = [], data, loggedIn } = props;
+
   const jobs = savedJobs.reduce((acc, id) => {
     const job = data.find(job => job._id === id);
     if (job) acc.push(job);
@@ -25,7 +27,7 @@ const Bookmarks = ({ savedJobs = [], data, loggedIn, ...props }) => {
     <div>
       <Header>My saved jobs</Header>
       <Status>{status}</Status>
-      <FeaturedItems {...props} data={jobs} savedJobs={savedJobs} />;
+      <FeaturedItems {...props} data={jobs} />;
     </div>
   );
 };

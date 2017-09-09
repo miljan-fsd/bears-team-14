@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import './style.css';
+import { Flash } from './styled';
 
 class Login extends Component {
+  state = {
+    errorStatus: '',
+  };
   userLogin = e => {
     e.preventDefault();
 
@@ -26,8 +30,11 @@ class Login extends Component {
   }
 
   render() {
+    const { errorStatus } = this.state;
+
     return (
       <div className="login">
+        {errorStatus && <Flash danger>{errorStatus}</Flash>}
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
             <div className="head-field has-text-centered">

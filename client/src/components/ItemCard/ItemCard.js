@@ -38,7 +38,10 @@ const ItemCard = ({
     const name = e.target.dataset.name;
     const history = props.history;
 
-    if (name === 'save') return props.handleSave(id);
+    if (name === 'save') {
+      if (!props.loggedIn) return history && history.push(`/login`);
+      return props.handleSave(id);
+    }
 
     history && history.push(`/job/${id}`);
   };

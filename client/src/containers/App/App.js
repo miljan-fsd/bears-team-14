@@ -106,7 +106,7 @@ class App extends Component {
   loginUser = (username, isAdmin) => {
     this.setState(
       () => ({
-        loggedIn: true,
+        loggedIn: Boolean(username),
         isAdmin,
         username,
       }),

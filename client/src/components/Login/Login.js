@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import api from '../../api';
 
 import './style.css';
-import { Flash } from './styled';
+import Flash from '../Flash';
 
 class Login extends Component {
   state = {

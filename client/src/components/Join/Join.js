@@ -1,12 +1,63 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import api from '../../api';
+
 import './style.css';
 
+import Flash from '../Flash';
+
 class Join extends Component {
+  state = {
+    errorStatus: '',
+    busy: false,
+  };
+
+  componentDidMount() {
+    if (this.props.loggedIn) {
+      this.props.history.replace('/');
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.loggedIn) {
+      this.props.history.replace(`/`);
+    }
+  }
+
+  handleChange = e => {
+    this.setState(() => ({
+      errorStatus: '',
+    }));
+  };
+
+  registerUser = e => {
+    e.preventDefault();
+
+    this.setState(() => ({
+      busy: true,
+    }));
+
+    const username = this.username.value;
+    const password = this.password.value;
+
+    api.registerNewUser(username, password).then(json => {
+      if (json.error) {
+        return this.setState(() => ({
+          errorStatus: json.error.text,
+          busy: false,
+        }));
+      }
+      this.props.handleLogin(json.username, json.isAdmin);
+    });
+  };
+
   render() {
+    const { busy, errorStatus } = this.state;
+
     return (
       <div className="join">
+        {errorStatus && <Flash danger>{errorStatus}</Flash>}
         <div className="columns">
           <div className="column is-10 is-offset-1">
             <div className="columns">
@@ -50,7 +101,7 @@ class Join extends Component {
                     </a>
                   </div>
                   <div className="divider line">OR</div>
-                  <form action="#">
+                  <form onSubmit={this.registerUser}>
                     <div className="columns">
                       <div className="column">
                         <div className="field">
@@ -92,19 +143,20 @@ class Join extends Component {
                     </div>
 
                     <div className="field">
-                      <label className="label" htmlFor="email">
-                        Your Email
+                      <label className="label" htmlFor="text">
+                        Username
                       </label>
                       <div className="control has-icons-left">
                         <input
+                          onChange={this.handleChange}
+                          autoFocus
                           className="input is-large"
-                          type="email"
-                          placeholder="name@example.com"
-                          name="email"
+                          type="text"
+                          placeholder="username"
+                          name="username"
+                          ref={el => (this.username = el)}
+                          required
                         />
-                        <span className="icon is-medium is-left">
-                          <i className="fa fa-envelope" />
-                        </span>
                       </div>
                     </div>
 
@@ -118,6 +170,8 @@ class Join extends Component {
                           type="password"
                           placeholder="password"
                           name="password"
+                          ref={el => (this.password = el)}
+                          required
                         />
                         <span className="icon is-medium is-left">
                           <i className="fa fa-lock" />
@@ -136,6 +190,7 @@ class Join extends Component {
                           <button
                             type="submit"
                             className="button is-fullwidth is-large is-primary"
+                            disabled={busy}
                           >
                             <span>SIGN UP</span>
                             <span className="icon is-medium">

@@ -11,14 +11,14 @@ const isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   }
-  next('Not logged in');
+  next({ status: 401, text: 'Not logged in' });
 };
 
 const isAdmin = (req, res, next) => {
   if (req.isAuthenticated() && req.user.isAdmin) {
     return next();
   }
-  next('Not an admin or not logged in');
+  next({ status: 401, text: 'Not an admin or not logged in' });
 };
 
 module.exports = {

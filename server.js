@@ -57,7 +57,11 @@ app.post(
   userController.register,
   authController.login,
   (req, res) => {
-    res.json({ loggedIn: true });
+    res.json({
+      loggedIn: true,
+      isAdmin: req.user.isAdmin,
+      username: req.user.username,
+    });
   }
 );
 

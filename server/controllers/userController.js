@@ -6,7 +6,7 @@ const register = (req, res, next) => {
   });
 
   User.register(user, req.body.password, (err, user) => {
-    if (err) return next(err);
+    if (err) return next({ error: { status: 400, text: err.message } });
     next();
   });
 };

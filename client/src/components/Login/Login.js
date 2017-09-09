@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import api from '../../api';
+import { withScrollToTop } from '../hocs/withScrollToTop';
 
 import './style.css';
 import Flash from '../Flash';
@@ -179,4 +180,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withScrollToTop(Login);

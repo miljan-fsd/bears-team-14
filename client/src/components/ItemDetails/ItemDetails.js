@@ -24,7 +24,7 @@ const findItem = (id, data) => data.filter(item => item._id === id)[0];
 const ItemDetails = props => {
   const id = props.history.location.pathname.split('/').pop();
   const data = findItem(id, props.data);
-  const { isAdmin } = props;
+  const { history, isAdmin } = props;
   const isSaved = props.savedJobs && props.savedJobs.includes(id);
   const caption = isSaved ? 'Saved' : 'Save';
 
@@ -35,6 +35,7 @@ const ItemDetails = props => {
   };
 
   const handleSave = () => {
+    if (!props.loggedIn) return history && history.push(`/login`);
     props.handleSave(data._id);
   };
 

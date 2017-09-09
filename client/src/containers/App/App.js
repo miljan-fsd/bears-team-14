@@ -103,22 +103,17 @@ class App extends Component {
     api.userSaveJob(id).then(() => this.getUser());
   };
 
-  loginUser = (username, password) => {
-    api
-      .loginUser(username, password)
-      .then(json => {
-        this.setState(
-          () => ({
-            loggedIn: true,
-            isAdmin: json.isAdmin,
-            username: json.username,
-          }),
-          () => {
-            this.getUser(this.state.username);
-          }
-        );
-      })
-      .catch(err => console.log('Login error:', err));
+  loginUser = (username, isAdmin) => {
+    this.setState(
+      () => ({
+        loggedIn: true,
+        isAdmin,
+        username,
+      }),
+      () => {
+        this.getUser(this.state.username);
+      }
+    );
   };
 
   toggleAdmin = e => {

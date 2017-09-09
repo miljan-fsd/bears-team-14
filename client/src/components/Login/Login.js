@@ -1,16 +1,45 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import api from '../../api';
+
 import './style.css';
+import { Flash } from './styled';
 
 class Login extends Component {
+  state = {
+    errorStatus: '',
+  };
   userLogin = e => {
     e.preventDefault();
 
     const username = this.username.value;
     const password = this.password.value;
 
-    this.props.handleLogin(username, password);
+    api
+      .loginUser(username, password)
+      .then(json => {
+        if (json.error) return json.error;
+        this.props.handleLogin(username, (json.isAdmin = false));
+      })
+      .then(error => {
+        this.password.value = '';
+        this.setState(
+          () => ({
+            errorStatus:
+              error.status === 401
+                ? 'Incorrect username and/or password'
+                : 'Error',
+          }),
+          () =>
+            setTimeout(() => {
+              this.setState(() => ({
+                errorStatus: '',
+              }));
+            }, 3000)
+        );
+      })
+      .catch(err => console.log('Login error:', err));
   };
 
   componentDidMount() {
@@ -26,8 +55,11 @@ class Login extends Component {
   }
 
   render() {
+    const { errorStatus } = this.state;
+
     return (
       <div className="login">
+        {errorStatus && <Flash danger>{errorStatus}</Flash>}
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
             <div className="head-field has-text-centered">

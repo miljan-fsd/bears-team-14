@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './App.css';
 import api from '../../api';
@@ -124,7 +124,11 @@ class App extends Component {
     return (
       <Router>
         <div className="app-wrapper">
-          <Header isAdmin={this.state.isAdmin} loggedIn={this.state.loggedIn} />
+          <Route
+            render={props => (
+              <Header {...state} {...props} logoutUser={this.logoutUser} />
+            )}
+          />
           <Main
             {...this.state}
             createNewJob={this.createNewJob}

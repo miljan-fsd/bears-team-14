@@ -1,3 +1,4 @@
+import checkLogin from './checkLogin';
 import createNewJob from './createNewJob';
 import deleteItem from './deleteItem';
 import getItems from './getItems';
@@ -8,6 +9,7 @@ import updateItem from './updateItem';
 import userSaveJob from './userSaveJob';
 
 export default {
+  checkLogin,
   createNewJob,
   deleteItem,
   getItems,

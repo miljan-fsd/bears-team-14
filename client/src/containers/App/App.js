@@ -38,6 +38,9 @@ class App extends Component {
         loading: false,
         busy: false,
       }));
+
+      const { username, isAdmin } = await api.checkLogin();
+      if (username) this.loginUser(username, isAdmin);
     } catch (e) {
       console.error(e);
     }

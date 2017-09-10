@@ -19,6 +19,7 @@ export const Wrapper = styled.nav`
   text-transform: uppercase;
   top: 0;
   width: 100%;
+  z-index: 1;
 `;
 
 export const Logo = styled.div`

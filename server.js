@@ -49,7 +49,7 @@ app.use('/api/v1', jobRoutes);
 app.use('/api/v1', userRoutes);
 
 app.get('/test-login/', authController.isLoggedIn, (req, res) => {
-  res.send(`Logged in as ${req.user.username}`);
+  res.send({ username: req.user.username, isAdmin: req.user.isAdmin });
 });
 
 app.post(

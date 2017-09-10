@@ -11,6 +11,13 @@ class Login extends Component {
   state = {
     errorStatus: '',
   };
+
+  handleChange = e => {
+    this.setState(() => ({
+      errorStatus: '',
+    }));
+  };
+
   userLogin = e => {
     e.preventDefault();
 
@@ -21,24 +28,17 @@ class Login extends Component {
       .loginUser(username, password)
       .then(json => {
         if (json.error) return json.error;
-        this.props.handleLogin(username, (json.isAdmin = false));
+        this.props.handleLogin(username, json.isAdmin);
       })
       .then(error => {
+        if (!error) return;
         this.password.value = '';
-        this.setState(
-          () => ({
-            errorStatus:
-              error.status === 401
-                ? 'Incorrect username and/or password'
-                : 'Error',
-          }),
-          () =>
-            setTimeout(() => {
-              this.setState(() => ({
-                errorStatus: '',
-              }));
-            }, 3000)
-        );
+        this.setState(() => ({
+          errorStatus:
+            error.status === 401
+              ? 'Incorrect username and/or password'
+              : 'Error',
+        }));
       })
       .catch(err => console.log('Login error:', err));
   };
@@ -112,6 +112,7 @@ class Login extends Component {
                   </label>
                   <div className="control has-icons-left">
                     <input
+                      onChange={this.handleChange}
                       autoFocus
                       className="input is-large"
                       type="text"
@@ -129,6 +130,7 @@ class Login extends Component {
                   </label>
                   <div className="control has-icons-left">
                     <input
+                      onChange={this.handleChange}
                       className="input is-large"
                       type="password"
                       placeholder="password"

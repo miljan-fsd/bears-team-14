@@ -4,6 +4,7 @@ import deleteItem from './deleteItem';
 import getItems from './getItems';
 import getUser from './getUser';
 import loginUser from './loginUser';
+import logoutUser from './logoutUser';
 import registerNewUser from './registerNewUser';
 import updateItem from './updateItem';
 import userSaveJob from './userSaveJob';
@@ -15,6 +16,7 @@ export default {
   getItems,
   getUser,
   loginUser,
+  logoutUser,
   registerNewUser,
   updateItem,
   userSaveJob,

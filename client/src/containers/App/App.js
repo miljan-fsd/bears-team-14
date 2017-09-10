@@ -115,12 +115,16 @@ class App extends Component {
     );
   };
 
+  logoutUser = () => {
     this.setState(() => ({
-      isAdmin,
+      loggedIn: null,
+      isAdmin: null,
+      username: null,
     }));
   };
 
   render() {
+    const state = this.state;
     return (
       <Router>
         <div className="app-wrapper">

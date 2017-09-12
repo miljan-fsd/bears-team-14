@@ -3,6 +3,7 @@ export default (id, data = {}) =>
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include',
     method: 'PUT',
     body: JSON.stringify(data),
   })

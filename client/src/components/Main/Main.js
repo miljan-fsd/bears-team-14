@@ -1,9 +1,10 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 import './style.css';
 
 import AdminPanel from '../AdminPanel';
+import Bookmarks from '../Bookmarks';
 import Home from '../Home';
 import ItemDetails from '../ItemDetails';
 import Jobs from '../Jobs';
@@ -23,7 +24,7 @@ class Main extends React.Component {
           exact
           path="/"
           render={props => (
-            <Home {...props} data={featured} total={data.length} />
+            <Home {...props} {...rest} data={featured} total={data.length} />
           )}
         />
         <Route
@@ -42,9 +43,12 @@ class Main extends React.Component {
           path="/job/:id"
           render={props => <ItemDetails {...props} {...rest} data={data} />}
         />
-        <Route path="/jobs" render={props => <Jobs {...props} data={data} />} />
-        <Route path="/login" component={Login} />
-        <Route path="/join" component={Join} />
+        <Route
+          path="/jobs"
+          render={props => <Jobs {...props} {...rest} data={data} />}
+        />
+        <Route path="/login" render={props => <Login {...props} {...rest} />} />
+        <Route path="/join" render={props => <Join {...props} {...rest} />} />
         <Route path="/hiring" component={Hiring} />
         <Route
           path="/add"
@@ -55,6 +59,15 @@ class Main extends React.Component {
           render={props => (
             <UpdateJob {...props} {...rest} data={data} editMode />
           )}
+        />
+        <Route
+          path="/bookmarks"
+          render={props =>
+            rest.loggedIn ? (
+              <Bookmarks {...props} {...rest} data={data} />
+            ) : (
+              <Redirect to="/" />
+            )}
         />
       </div>
     );

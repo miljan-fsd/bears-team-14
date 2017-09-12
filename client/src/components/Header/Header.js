@@ -1,75 +1,63 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './style.css';
 
-class Header extends Component {
-  render() {
-    const { isAdmin } = this.props;
-    return (
-      <div>
-        <div className="navbar">
-          <div className="navbar-brand">
-            <NavLink to="/">
-              <img src="http://via.placeholder.com/185x80" alt="Logo" />
-            </NavLink>
+import api from '../../api';
 
-            <div className="navbar-burger burger" data-target="mainNavigation">
-              <span />
-              <span />
-              <span />
-            </div>
-          </div>
+import { Logo, ProfileLink, Wrapper } from './styled';
 
-          <div id="mainNavigation" className="navbar-menu">
-            <div className="navbar-start">
-              <NavLink
-                activeClassName="selected"
-                className="navbar-item"
-                to="/jobs"
-              >
-                Explore Jobs
-              </NavLink>
-              {isAdmin && (
-                <NavLink
-                  activeClassName="selected"
-                  className="navbar-item"
-                  to="/admin"
-                >
-                  Admin Panel
-                </NavLink>
-              )}
-            </div>
-            <div className="navbar-end">
-              <NavLink
-                activeClassName="selected"
-                className="navbar-item"
-                to="/login"
-              >
-                Log in
-              </NavLink>
+const Header = props => {
+  const { history, isAdmin, loggedIn, username } = props;
 
-              <NavLink
-                activeClassName="selected"
-                className="navbar-item"
-                to="/join"
-              >
-                Join
-              </NavLink>
+  const handleLogout = e => {
+    e.preventDefault();
+    api.logoutUser().then(() => {
+      props.logoutUser();
+      history && history.push('/');
+    });
+  };
 
-              <NavLink
-                activeClassName="selected"
-                className="navbar-item"
-                to="/hiring"
-              >
-                For the Employers
-              </NavLink>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
+  return (
+    <Wrapper>
+      <NavLink to="/">
+        <Logo imgUrl="/logo.png">
+          <p>
+            Chingu<br />Voyage-1
+          </p>
+        </Logo>
+      </NavLink>
+      <NavLink activeClassName="selected" className="navbar-item" to="/jobs">
+        Explore Jobs
+      </NavLink>
+      {isAdmin && (
+        <NavLink activeClassName="selected" className="navbar-item" to="/admin">
+          Admin Panel
+        </NavLink>
+      )}
+      {!loggedIn && (
+        <NavLink activeClassName="selected" className="navbar-item" to="/login">
+          Log in
+        </NavLink>
+      )}
+      {!loggedIn && (
+        <NavLink activeClassName="selected" className="navbar-item" to="/join">
+          Join
+        </NavLink>
+      )}
+      {loggedIn && (
+        <NavLink
+          activeClassName="selected"
+          className="navbar-item"
+          to="/bookmarks"
+        >
+          My saved jobs
+        </NavLink>
+      )}
+      {loggedIn && <ProfileLink>Hello {username}!</ProfileLink>}
+      {loggedIn && <a onClick={handleLogout}>Logout</a>}
+    </Wrapper>
+  );
+};
 
 export default Header;

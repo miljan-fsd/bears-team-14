@@ -1,7 +1,6 @@
-export default id =>
-  fetch(`/api/v1/job/${id}`, {
+export default username =>
+  fetch(`/api/v1/user/${username}`, {
     credentials: 'include',
-    method: 'DELETE',
   })
     .then(res => res.json())
     .catch(err => console.log(err));

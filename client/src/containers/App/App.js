@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './App.css';
 import api from '../../api';
@@ -7,7 +7,6 @@ import api from '../../api';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Main from '../../components/Main';
-import TempSettings from '../../components/TempSettings';
 
 class App extends Component {
   constructor(props) {
@@ -38,6 +37,9 @@ class App extends Component {
         loading: false,
         busy: false,
       }));
+
+      const { username, isAdmin } = await api.checkLogin();
+      if (username) this.loginUser(username, isAdmin);
     } catch (e) {
       console.error(e);
     }
@@ -86,31 +88,59 @@ class App extends Component {
     }
   };
 
+  getUser = username => {
+    api.getUser(username).then(data => {
+      this.setState(() => ({
+        savedJobs: data.savedJobs,
+      }));
+    });
+  };
+
   applyToJob = id => {
     console.log('App.js - Applying to', id);
   };
 
   saveJob = id => {
-    console.log('App.js - Save', id);
+    if (!this.state.loggedIn) return;
+    api.userSaveJob(id).then(() => this.getUser());
   };
 
-  toggleAdmin = e => {
-    const isAdmin = e.target.checked;
+  loginUser = (username, isAdmin) => {
+    this.setState(
+      () => ({
+        loggedIn: Boolean(username),
+        isAdmin,
+        username,
+      }),
+      () => {
+        this.getUser(this.state.username);
+      }
+    );
+  };
+
+  logoutUser = () => {
     this.setState(() => ({
-      isAdmin,
+      loggedIn: null,
+      isAdmin: null,
+      username: null,
     }));
   };
 
   render() {
+    const state = this.state;
     return (
       <Router>
         <div className="app-wrapper">
-          <TempSettings toggleAdmin={this.toggleAdmin} />
-          <Header isAdmin={this.state.isAdmin} />
+          <Route
+            render={props => (
+              <Header {...state} {...props} logoutUser={this.logoutUser} />
+            )}
+          />
           <Main
             {...this.state}
             createNewJob={this.createNewJob}
             deleteItem={this.deleteItem}
+            handleLogin={this.loginUser}
             updateItem={this.updateItem}
             handleApply={this.applyToJob}
             handleSave={this.saveJob}

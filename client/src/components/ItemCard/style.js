@@ -29,33 +29,6 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const Save = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 8px;
-
-  &:hover {
-    color: #000;
-  }
-`;
-
-export const Bookmark = styled.span`
-  color: #bbb;
-  line-height: 12px;
-  margin-left: 6px;
-  width: 8px;
-
-  & > .fa {
-    font-size: 12px;
-  }
-
-  ${Save}:hover & {
-    color: #04d092;
-  }
-`;
-
 export const Description = styled.div`
   border-bottom: 1px solid rgba(155, 155, 155, 0.4);
   display: flex;

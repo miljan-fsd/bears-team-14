@@ -1,12 +1,66 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import api from '../../api';
+import { withScrollToTop } from '../hocs/withScrollToTop';
+
 import './style.css';
+import Flash from '../Flash';
 
 class Login extends Component {
+  state = {
+    errorStatus: '',
+  };
+
+  handleChange = e => {
+    this.setState(() => ({
+      errorStatus: '',
+    }));
+  };
+
+  userLogin = e => {
+    e.preventDefault();
+
+    const username = this.username.value;
+    const password = this.password.value;
+
+    api
+      .loginUser(username, password)
+      .then(json => {
+        if (json.error) return json.error;
+        this.props.handleLogin(username, json.isAdmin);
+      })
+      .then(error => {
+        if (!error) return;
+        this.password.value = '';
+        this.setState(() => ({
+          errorStatus:
+            error.status === 401
+              ? 'Incorrect username and/or password'
+              : 'Error',
+        }));
+      })
+      .catch(err => console.log('Login error:', err));
+  };
+
+  componentDidMount() {
+    if (this.props.loggedIn) {
+      this.props.history.replace('/');
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.loggedIn) {
+      this.props.history.replace(`/`);
+    }
+  }
+
   render() {
+    const { errorStatus } = this.state;
+
     return (
       <div className="login">
+        {errorStatus && <Flash danger>{errorStatus}</Flash>}
         <div className="columns">
           <div className="column is-half is-offset-one-quarter">
             <div className="head-field has-text-centered">
@@ -51,21 +105,22 @@ class Login extends Component {
 
               <div className="divider line">OR</div>
 
-              <form action="#">
+              <form onSubmit={this.userLogin}>
                 <div className="field">
-                  <label className="label" htmlFor="email">
-                    Your Email
+                  <label className="label" htmlFor="text">
+                    Username
                   </label>
                   <div className="control has-icons-left">
                     <input
+                      onChange={this.handleChange}
+                      autoFocus
                       className="input is-large"
-                      type="email"
-                      placeholder="name@example.com"
-                      name="email"
+                      type="text"
+                      placeholder="username"
+                      name="username"
+                      ref={el => (this.username = el)}
+                      required
                     />
-                    <span className="icon is-medium is-left">
-                      <i className="fa fa-envelope" />
-                    </span>
                   </div>
                 </div>
 
@@ -75,10 +130,13 @@ class Login extends Component {
                   </label>
                   <div className="control has-icons-left">
                     <input
+                      onChange={this.handleChange}
                       className="input is-large"
                       type="password"
                       placeholder="password"
                       name="password"
+                      ref={el => (this.password = el)}
+                      required
                     />
                     <span className="icon is-medium is-left">
                       <i className="fa fa-lock" />
@@ -124,4 +182,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withScrollToTop(Login);
